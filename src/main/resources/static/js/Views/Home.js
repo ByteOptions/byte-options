@@ -1,8 +1,14 @@
 import * as KEYS from "../keys.js";
 export default function Home() {
-    return `<input id="inputMain" type="text" placeholder="search"> <button id="submit">Submit</button> <div id="recipe"></div> <div id="google_house"></div> <div id="youtubeBox"></div>`
+    return `<input id="inputMain" type="text" placeholder="search"> <button id="submit">Submit</button> <div id="recipe"></div> <div id="google_house"></div> <div id="youtubeBox"></div> <button id="load">More videos</button>`
 }
-export function searchClick(){
+
+export function homeEvents(){
+    searchClick();
+    setLoadEvent();
+}
+
+function searchClick(){
     $("#submit").click(function (){
         googleGet()
         getVideos()
@@ -17,9 +23,13 @@ function googleGet(){
 </iframe>`)
 }
 
-function getVideos(id){
+let page = 1;
+let pageToken = "";
+
+function getVideos(){
     const q = $('#inputMain').val()
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=4&type=video&videoEmbeddable=true`;
+    console.log("get video's are called")
+    const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=4&per_page=4&pageToken=${pageToken}&type=video&videoEmbeddable=true`;
     const option = {
         method: 'GET',
         header:{
@@ -30,12 +40,14 @@ function getVideos(id){
         .then(res => res.json()
         ).then(data => {
         $("#youtube");
+        console.log(data)
         embedData(data)
     })
 }
 
 function embedData(data){
     let dataArr = data.items
+    pageToken = data.nextPageToken;
     dataArr.forEach(function(video){
         console.log(video.id)
         $('#youtubeBox').append(`
@@ -44,5 +56,12 @@ function embedData(data){
         frameborder="=0"
         allow="accelermeter; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>` )
+    })
+}
+function setLoadEvent() {
+    $('#load').on('click', function () {
+        page++;
+        getVideos();
+        console.log(page)
     })
 }
