@@ -1,5 +1,5 @@
-import Home from "./Views/Home.js"
-import {searchClick} from "./Views/Home.js"
+import Home, {homeEvents} from "./Views/Home.js"
+// import {searchClick} from "./Views/Home.js"
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -12,7 +12,7 @@ export default function router(URI) {
              state: {},
              uri: '/',
              title: 'Home',
-             viewEvent: searchClick,
+             viewEvent: homeEvents,
          }
     };
 
