@@ -1,38 +1,34 @@
 import * as KEYS from "../keys.js";
+
 export default function Home() {
-    return `<input id="inputMain" type="text" placeholder="search"> <button id="submit">Submit</button> <div id="recipe"></div> <div id="google_house"></div> <div id="youtubeBox"></div> <button id="load">More videos</button>`
+    return `<input id="inputMain" type="text" placeholder="search"> <button id="submit">Submit</button> 
+        <div id="recipe"></div> <div id="google_house"></div> <div id="youtubeBox"></div> 
+        <button id="previous">Previous</button> <button id="loadMore">More videos</button>`
 }
 
-export function homeEvents(){
+export function homeEvents() {
     searchClick();
     setLoadEvent();
+    setPrevEvent()
 }
 
-function searchClick(){
-    $("#submit").click(function (){
-        googleGet()
+function searchClick() {
+    $("#submit").click(function () {
         getVideos()
-        })
-}
-function googleGet(){
-    $("#google_house").append(`<iframe
-  width="450"
-  height="250"
-  frameborder="0" style="border:0"
-  src="https://www.google.com/maps/embed/v1/place?key=${KEYS.returnGoogleKey()}&q=San+Antonio" allowfullscreen>
-</iframe>`)
+    })
 }
 
 let page = 1;
 let pageToken = "";
+let prevPageToken = "";
 
-function getVideos(){
+function getVideos() {
     const q = $('#inputMain').val()
     console.log("get video's are called")
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=4&per_page=4&pageToken=${pageToken}&type=video&videoEmbeddable=true`;
+    const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=2&per_page=4&pageToken=${pageToken}&prevPageToken=${prevPageToken}&type=video&videoEmbeddable=true`;
     const option = {
         method: 'GET',
-        header:{
+        header: {
             'Content-Type': 'application/json'
         }
     };
@@ -45,22 +41,32 @@ function getVideos(){
     })
 }
 
-function embedData(data){
+function embedData(data) {
     let dataArr = data.items
     pageToken = data.nextPageToken;
-    dataArr.forEach(function(video){
+    prevPageToken = data.prevPageToken;
+    dataArr.forEach(function (video) {
         console.log(video.id)
         $('#youtubeBox').append(`
         <iframe class="video" col="auto" src="https://www.youtube.com/embed/${video.id.videoId}" 
         title="YouTube video player" 
         frameborder="=0"
         allow="accelermeter; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>` )
+        allowfullscreen></iframe>`)
     })
 }
+
 function setLoadEvent() {
-    $('#load').on('click', function () {
+    $('#loadMore').on('click', function () {
         page++;
+        getVideos();
+        console.log(page)
+    })
+}
+
+function setPrevEvent(){
+    $('#previous').on('click', function () {
+        page--;
         getVideos();
         console.log(page)
     })
