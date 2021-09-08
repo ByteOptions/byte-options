@@ -23,7 +23,7 @@ export function homeEvents() {
 
 function searchClick() {
     $("#submit").click(function () {
-        let q = $("#submit").val()
+        let q = $("#inputMain").val()
         console.log(q);
         getLocations(q);
         // searchRecipes();
