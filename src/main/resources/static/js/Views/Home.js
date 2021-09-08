@@ -1,5 +1,11 @@
 import * as KEYS from "../keys.js";
-// import mapboxgl from '../../node_modules/mapbox-gl';
+
+var map;
+
+var geojson = {
+    type: 'FeatureCollection',
+    features: []
+};
 
 export default function Home() {
     return `<input id="inputMain" type="text" placeholder="search"><button id="submit">Submit</button> <div id="recipe">
@@ -9,42 +15,74 @@ export default function Home() {
 export function searchClick() {
     mapBox()
     $("#submit").click(function () {
-
+        let q = $("#submit").val()
+        console.log(q);
+        getLocations(q);
         // searchRecipes();
-        searchGeocoder();
+
     })
 }
 
-function searchGeocoder(){
-    let q = $("#inputMain").val();
+function getLocations(q) {
     $.ajax({
         method: "GET",
-        url: `https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/tilequery/-98.4936,29.4241.json?limit=50&access_token=${mapboxgl.accessToken}&radius=3000&dedupe=false`,
-        success: function(data){
+        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=29.4241%2C-98.4936&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
+        success: function (data) {
             console.log(data);
-            console.log("tiles");
-
+            console.log("locations")
+            combLocation(data);
         }
-    });
-
+    })
 }
+
 
 
 function mapBox() {
     mapboxgl.accessToken = KEYS.returnMapboxKey();
-    const map = new mapboxgl.Map({
+     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-98.4936, 29.4241], // starting position [lng, lat]
         zoom: 9 // starting zoom
     });
-    //this adds a search bar on our map but we already use one as the main feature of the site so its commented out for now
-    // map.addControl(
-    //     new MapboxGeocoder({
-    //         accessToken: mapboxgl.accessToken,
-    //         mapboxgl: mapboxgl
-    //     })
-    // );
+
+}
+
+function createMarkers() {
+// add markers to map
+    for (const { geometry, properties } of geojson.features) {
+// create a HTML element for each feature
+        const el = document.createElement('div');
+        el.className = 'marker';
+
+// make a marker for each feature and add it to the map
+        new mapboxgl.Marker()
+            .setLngLat(geometry.coordinates)
+            .setPopup(
+                new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML(
+                        `<h3>${properties.title}</h3><p>${properties.description}</p>`
+                    )
+            )
+            .addTo(map);
+    }
+
+}
+
+function combLocation(data) {
+
+    let test = data.results.map(function (result) {
+        let lng = result.geometry.location.lng;
+        let lat = result.geometry.location.lat;
+        geojson.features.unshift({
+            type: 'Feature',
+            geometry: {type: 'Point', coordinates: [lng, lat]},
+            properties: {title: `${result.name}`, description: `${result.vicinity}`}
+        })
+
+
+    });
+    createMarkers();
 }
 
 
