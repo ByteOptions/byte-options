@@ -1,5 +1,6 @@
 import Home, {homeEvents} from "./Views/Home.js"
-import Register, {registerEvents} from "./Views/Register.js"
+import Register, {createRegisterEvents} from "./Views/Register.js"
+import registerEvent from "./views/Register.js"
 import Login, {loginEvents} from "./Views/Login.js"
 import Restaurants, {restaurantsEvents} from "./Views/Restaurants.js";
 import Recipes, {recipesEvents} from "./Views/Recipes.js";
@@ -19,13 +20,15 @@ export default function router(URI) {
             title: 'Home',
             viewEvent: homeEvents,
         },
+
         '/register': {
             returnView: Register,
             state: {},
             uri: '/register',
             title: 'Register',
-            viewEvent: registerEvents
+            viewEvent: createRegisterEvents
         },
+
         '/login': {
             returnView: Login,
             state: {},
@@ -33,6 +36,7 @@ export default function router(URI) {
             title: 'Login',
             viewEvent: loginEvents
         },
+
         '/recipes': {
             returnView: Recipes,
             state: {},
@@ -40,6 +44,7 @@ export default function router(URI) {
             title: 'Recipes',
             viewEvent: recipesEvents
         },
+
         '/restaurants': {
             returnView: Restaurants,
             state: {},
