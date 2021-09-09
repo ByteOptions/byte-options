@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.codeup</groupId>
-    <artifactId>capstone-starter</artifactId>
+    <artifactId>byte-options</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>capstone-starter</name>
-    <description>capstone-starter</description>
+    <name>byte-options</name>
+    <description>byte-options</description>
     <properties>
         <java.version>11</java.version>
     </properties>

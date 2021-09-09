@@ -5,7 +5,7 @@ import {getHeaders} from "./auth.js";
 let count = 0;
 
 /**
- * Finds the correct route for a given view, builds a loading view, fetches data and builds the final rendered view.
+ * Finds the correct route for a given view, builds a loading view, fetches com.codeup.capstonestarter.data and builds the final rendered view.
  * @param URI
  */
 export default function createView(URI) {

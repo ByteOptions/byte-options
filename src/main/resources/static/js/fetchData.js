@@ -1,6 +1,6 @@
 
 /**
- * Given an object containing all the required data for a given page, fetch all the needed data and return it as properties to pass to a view.
+ * Given an object containing all the required com.codeup.capstonestarter.data for a given page, fetch all the needed com.codeup.capstonestarter.data and return it as properties to pass to a view.
  * @param state
  * @param request
  * @returns {Promise<{}>}

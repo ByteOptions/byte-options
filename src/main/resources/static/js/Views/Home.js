@@ -177,7 +177,7 @@ function getRecipe(data){
     })
 
 }
-// decipher getRecipe data into list items to append to html
+// decipher getRecipe com.codeup.capstonestarter.data into list items to append to html
 function returnIngredients(data){
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }

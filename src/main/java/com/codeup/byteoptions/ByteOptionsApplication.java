@@ -1,13 +1,13 @@
-package com.codeup.capstonestarter;
+package com.codeup.byteoptions;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CapstoneStarterApplication {
+public class ByteOptionsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CapstoneStarterApplication.class, args);
+        SpringApplication.run(ByteOptionsApplication.class, args);
     }
 
 }
