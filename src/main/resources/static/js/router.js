@@ -1,6 +1,8 @@
 import Home, {homeEvents} from "./Views/Home.js"
 import Register, {registerEvents} from "./Views/Register.js"
 import Login, {loginEvents} from "./Views/Login.js"
+import Restaurants, {restaurantsEvents} from "./Views/Restaurants.js";
+import Recipes, {recipesEvents} from "./Views/Recipes.js";
 
 // import {searchClick} from "./Views/Home.js"
 /**
@@ -10,15 +12,15 @@ import Login, {loginEvents} from "./Views/Login.js"
  */
 export default function router(URI) {
     const routes = {
-         '/': {
-             returnView: Home,
-             state: {},
-             uri: '/',
-             title: 'Home',
-             viewEvent: homeEvents,
-         },
+        '/': {
+            returnView: Home,
+            state: {},
+            uri: '/',
+            title: 'Home',
+            viewEvent: homeEvents,
+        },
         '/register': {
-             returnView: Register,
+            returnView: Register,
             state: {},
             uri: '/register',
             title: 'Register',
@@ -29,7 +31,21 @@ export default function router(URI) {
             state: {},
             uri: '/login',
             title: 'Login',
-            viewEvent: loginEvents()
+            viewEvent: loginEvents
+        },
+        '/recipes': {
+            returnView: Recipes,
+            state: {},
+            uri: '/recipes',
+            title: 'Recipes',
+            viewEvent: recipesEvents
+        },
+        '/restaurants': {
+            returnView: Restaurants,
+            state: {},
+            uri: '/restaurants',
+            title: 'Restaurants',
+            viewEvent: restaurantsEvents
         }
 
     };
