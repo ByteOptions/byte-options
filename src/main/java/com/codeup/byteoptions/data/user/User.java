@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 @Entity
 @Table(name="users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,17 +23,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//    @JsonIgnoreProperties("user")
-//
-//    public enum Role {USER, ADMIN}
 
 
-    public User() {
-    }
-
-    public User(String username){
-        this.username = username;
-    }
     public User(Long id, String username, String email, String password) {
         this.id = id;
         this.username = username;
@@ -40,11 +32,18 @@ public class User {
         this.password = password;
     }
 
+    public User(){
+    }
+
+    public User (String username){
+        this.username = username;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,5 +70,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
