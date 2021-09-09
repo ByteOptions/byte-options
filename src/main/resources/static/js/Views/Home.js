@@ -12,13 +12,12 @@ export default function Home() {
     return `  
         <div id="recipe"></div> <div id="google_house"></div> <div id="recipe"></div>
     <div id="map" style="width: 400px; height: 300px;"></div>\` <div id="youtubeBox"></div> 
-        <button id="previous">Previous</button> <button id="loadMore">More videos</button>`
+        <button id="prevbtn" class="d-none">Previous</button> <button class="d-none" id="morebtn">More videos</button>`
 }
 
 export function homeEvents() {
     searchClick();
-    setLoadEvent();
-    setPrevEvent()
+
 }
 
 function searchClick() {
@@ -27,68 +26,149 @@ function searchClick() {
         console.log(q);
         getLocations(q);
         // searchRecipes();
-
-        getVideos()
+        getVideos(q)
         mapBox()
         searchRecipes()
     })
 }
 
-let page = 1;
-let pageToken = "";
-let prevPageToken = "";
+// YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // BELOW
+var nextPageToken = ""
+var prevPageToken = ""
 
-function getVideos() {
-    const q = $('#inputMain').val()
-    console.log("get video's are called")
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=2&per_page=4&pageToken=${pageToken}&prevPageToken=${prevPageToken}&type=video&videoEmbeddable=true`;
-    const option = {
+function getVideos(q) {
+    $.ajax({
         method: 'GET',
-        header: {
-            'Content-Type': 'application/json'
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        data: {
+            key: KEYS.returnGoogleKey(),
+            q: `${q} recipes`,
+            part: 'snippet',
+            maxResults: 4,
+            type: 'video',
+            videoEmbeddable: true,
+        },
+        success: function (data) {
+            console.log(data)
+            nextPageToken = data.nextPageToken
+            // getNextVideo(q, data.nextPageToken)
+            embedData(data);
+            $("#morebtn").toggleClass('d-none')
+            $("#prevbtn").toggleClass('d-none')
+            addYoutubePagination(q);
+
+        },
+        error: function (response) {
+            console.log("Request Failed");
+            console.log(response)
         }
-    };
-    fetch(url, option)
-        .then(res => res.json()
-        ).then(data => {
-        $("#youtube");
-        console.log(data)
-        embedData(data)
-    })
+    });
 }
+function getNextVideo(q, pageToken) {
+    $.ajax({
+        method: 'GET',
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        data: {
+            key: KEYS.returnGoogleKey(),
+            q: `${q} recipes`,
+            part: 'snippet',
+            maxResults: 4,
+            type: 'video',
+            videoEmbeddable: true,
+            pageToken: pageToken
+        },
+        success: function (data) {
+            prevPageToken = data.prevPageToken
+            nextPageToken = data.nextPageToken
+            embedData(data);
+        },
+        error: function (response) {
+            console.log("Request Failed");
+            console.log(response)
+        }
+    });
+}
+
 
 function embedData(data) {
-    $('#youtubeBox').html("")
+    $("#youtubeBox").html("");
     let dataArr = data.items
-    pageToken = data.nextPageToken;
-    prevPageToken = data.prevPageToken;
     dataArr.forEach(function (video) {
-        console.log(video.id)
-        $('#youtubeBox').append(`
-        <iframe class="video" col="auto" src="https://www.youtube.com/embed/${video.id.videoId}" 
-        title="YouTube video player" 
-        frameborder="=0"
-        allow="accelermeter; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>`)
+        $("#youtubeBox").append(`
+            <iframe class="videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>`)
+
     })
 }
+function addYoutubePagination(q){
+    $("#morebtn").click(function(){
+        getNextVideo(q, nextPageToken);
 
-function setLoadEvent() {
-    $('#loadMore').on('click', function () {
-        page++;
-        getVideos();
-        console.log(page)
+    })
+    $("#prevbtn").click(function(){
+        getNextVideo(q, prevPageToken);
+
     })
 }
+// let page = 1;
+// let pageToken = "";
+// let prevPageToken = "";
+//
+// function getVideos() {
+//     const q = $('#inputMain').val()
+//     console.log("get video's are called")
+//     const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=2&per_page=4&pageToken=${pageToken}&prevPageToken=${prevPageToken}&type=video&videoEmbeddable=true`;
+//     const option = {
+//         method: 'GET',
+//         header: {
+//             'Content-Type': 'application/json'
+//         }
+//     };
+//     fetch(url, option)
+//         .then(res => res.json()
+//         ).then(data => {
+//         $("#youtube");
+//         console.log(data)
+//         embedData(data)
+//     })
+// }
+//
+// function embedData(data) {
+//     $('#youtubeBox').html("")
+//     let dataArr = data.items
+//     pageToken = data.nextPageToken;
+//     prevPageToken = data.prevPageToken;
+//     dataArr.forEach(function (video) {
+//         console.log(video.id)
+//         $('#youtubeBox').append(`
+//         <iframe class="video" col="auto" src="https://www.youtube.com/embed/${video.id.videoId}"
+//         title="YouTube video player"
+//         frameborder="=0"
+//         allow="accelermeter; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//         allowfullscreen></iframe>`)
+//     })
+// }
+//
+// function setLoadEvent() {
+//     $('#loadMore').on('click', function () {
+//         page++;
+//         getVideos();
+//         console.log(page)
+//     })
+// }
+//
+// function setPrevEvent(){
+//     $('#previous').on('click', function () {
+//         page--;
+//         getVideos();
+//         console.log(page)
+//     })
+// }
+// YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // ^^^^^^^
 
-function setPrevEvent(){
-    $('#previous').on('click', function () {
-        page--;
-        getVideos();
-        console.log(page)
-    })
-}
-
+// LOCATION / MAP FUNCTIONS // LOCATION / MAP FUNCTIONS // LOCATION / MAP FUNCTIONS // LOCATION / MAP FUNCTIONS // BELOW
 function getLocations(q) {
     $.ajax({
         method: "GET",
@@ -150,8 +230,10 @@ function combLocation(data) {
     });
     createMarkers();
 }
+// LOCATION / MAP FUNCTIONS // LOCATION / MAP FUNCTIONS // LOCATION / MAP FUNCTIONS // LOCATION / MAP FUNCTIONS // ^^^^^^
 
 
+//SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS //
 //first snippet of us-3 (copy/pasted)
 // first call to spoontacular -> returns vague list of recipes with IDs
 function searchRecipes() {
@@ -181,3 +263,5 @@ function getRecipe(data){
 function returnIngredients(data){
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
+
+//SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // ^^^^^^
