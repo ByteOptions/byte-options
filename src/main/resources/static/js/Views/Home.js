@@ -9,7 +9,7 @@ var geojson = {
 
 
 export default function Home() {
-    return `<input id="inputMain" type="text" placeholder="search"> <button id="submit">Submit</button> 
+    return `  
         <div id="recipe"></div> <div id="google_house"></div> <div id="recipe"></div>
     <div id="map" style="width: 400px; height: 300px;"></div>\` <div id="youtubeBox"></div> 
         <button id="previous">Previous</button> <button id="loadMore">More videos</button>`

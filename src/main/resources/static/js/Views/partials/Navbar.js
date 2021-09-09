@@ -16,8 +16,8 @@ export default function Navbar() {
         </li>
       </ul>
       <form class="d-flex">
-        <input id="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button id="search" class="btn btn-outline-success" type="submit">Search</button>
+        <input id="inputMain" class="form-control me-2" type="text" placeholder="Search" aria-label="Search">
+        <button id="submit" class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
   </div>
