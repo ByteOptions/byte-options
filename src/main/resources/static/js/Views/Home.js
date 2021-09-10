@@ -10,19 +10,20 @@ var geojson = {
 
 export default function Home() {
     return `  
-  <div class="container">
-    <div class="row">
-        <div class="col-md-8" id="recipe"></div>
-        <div class="col-md-4">
-        <div class="d-flex justify-content-center flex-wrap">
-        <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
-        <button id="previous" class="d-none">Previous</button> <button id="loadMore" class="d-none">More videos</button>
-        <div id="google_house"></div> <div id="recipe"></div>
-    <div id="map" style="width: 300px; height: 250px;"></div>
-    </div>\` 
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" id="recipe"></div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-center flex-wrap">
+                    <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
+                    <button id="previous" class="d-none">Previous</button> 
+                    <button id="loadMore" class="d-none">More videos</button>
+                    <div id="google_house"></div>
+                    <div id="map" style="width: 300px; height: 250px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
          `
 }
 
