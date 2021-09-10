@@ -12,12 +12,18 @@ export default function Home() {
     return `  
     <div class="container">
         <div class="row">
-            <div class="col-md-8" id="recipe"></div>
+        <div class="col-md-8">
+            <div id="recipe"></div>
+            <button id="prevspoon" class="d-none">Previous</button>
+            <button id="morespoon" class="d-none">More</button>
+            </div>
             <div class="col-md-4">
                 <div class="d-flex justify-content-center flex-wrap">
                     <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
-                    <button id="previous" class="d-none">Previous</button> 
-                    <button id="loadMore" class="d-none">More videos</button>
+                    <br>
+                    <button id="prevbtn" class="d-none">Previous</button> 
+                    <button id="morebtn" class="d-none" >More videos</button>
+                    <br>
                     <div id="google_house"></div>
                     <div id="map" style="width: 300px; height: 250px;"></div>
                 </div>
@@ -29,8 +35,6 @@ export default function Home() {
 
 export function homeEvents() {
     searchClick();
-    setLoadEvent();
-    setPrevEvent()
 }
 
 function searchClick() {
@@ -39,65 +43,90 @@ function searchClick() {
         console.log(q);
         getLocations(q);
         // searchRecipes();
-
-        getVideos()
+        getVideos(q)
         mapBox()
         searchRecipes()
     })
 }
 
-let page = 1;
-let pageToken = "";
-let prevPageToken = "";
+// YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // BELOW
+var nextPageToken = ""
+var prevPageToken = ""
 
-function getVideos() {
-    const q = $('#inputMain').val()
-    console.log("get video's are called")
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${KEYS.returnGoogleKey()}&part=snippet&q=${q}+recipes&maxResults=2&per_page=4&pageToken=${pageToken}&prevPageToken=${prevPageToken}&type=video&videoEmbeddable=true`;
-    const option = {
+function getVideos(q) {
+    $.ajax({
         method: 'GET',
-        header: {
-            'Content-Type': 'application/json'
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        data: {
+            key: KEYS.returnGoogleKey(),
+            q: `${q} recipes`,
+            part: 'snippet',
+            maxResults: 2,
+            type: 'video',
+            videoEmbeddable: true,
+        },
+        success: function (data) {
+            console.log(data)
+            nextPageToken = data.nextPageToken
+            // getNextVideo(q, data.nextPageToken)
+            embedData(data);
+            $("#morebtn").toggleClass('d-none')
+            $("#prevbtn").toggleClass('d-none')
+            addYoutubePagination(q);
+
+        },
+        error: function (response) {
+            console.log("Request Failed");
+            console.log(response)
         }
-    };
-    fetch(url, option)
-        .then(res => res.json()
-        ).then(data => {
-        $("#youtube");
-        console.log(data)
-        embedData(data)
-    })
+    });
 }
+function getNextVideo(q, pageToken) {
+    $.ajax({
+        method: 'GET',
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        data: {
+            key: KEYS.returnGoogleKey(),
+            q: `${q} recipes`,
+            part: 'snippet',
+            maxResults: 2,
+            type: 'video',
+            videoEmbeddable: true,
+            pageToken: pageToken
+        },
+        success: function (data) {
+            prevPageToken = data.prevPageToken
+            nextPageToken = data.nextPageToken
+            embedData(data);
+        },
+        error: function (response) {
+            console.log("Request Failed");
+            console.log(response)
+        }
+    });
+}
+
 
 function embedData(data) {
-    $('#youtubeBox').html("")
+    $("#youtubeBox").html("");
     let dataArr = data.items
-    pageToken = data.nextPageToken;
-    prevPageToken = data.prevPageToken;
     dataArr.forEach(function (video) {
-        console.log(video.id)
-        $('#youtubeBox').append(`
-        <iframe class="video" col="auto" src="https://www.youtube.com/embed/${video.id.videoId}" 
-        title="YouTube video player" 
-        frameborder="=0"
-        allow="accelermeter; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>`)
+        $("#youtubeBox").append(`
+            <iframe class="videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>`)
+
     })
 }
+function addYoutubePagination(q){
+    $("#morebtn").click(function(){
+        getNextVideo(q, nextPageToken);
 
-function setLoadEvent() {
-    $('#loadMore').on('click', function () {
-        page++;
-        getVideos();
-        console.log(page)
     })
-}
+    $("#prevbtn").click(function(){
+        getNextVideo(q, prevPageToken);
 
-function setPrevEvent() {
-    $('#previous').on('click', function () {
-        page--;
-        getVideos();
-        console.log(page)
     })
 }
 
@@ -165,32 +194,105 @@ function combLocation(data) {
 
 //first snippet of us-3 (copy/pasted)
 // first call to spoontacular -> returns vague list of recipes with IDs
-function searchRecipes() {
-    let q = $("#inputMain").val();
+var offset = 0;
+var globalQ = "";
+
+function searchRecipes(q) {
+    globalQ = q;
     $.ajax({
         method: "GET",
-        url: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${KEYS.returnSpoonKey()}&query=${q}&offset=0&number=10`,
+        url: `https://api.spoonacular.com/recipes/complexSearch`,
+        data: {
+            apiKey : KEYS.returnSpoonKey(),
+            query : q,
+            offset: 0,
+            number: 10,
+        },
         success: function (data) {
             console.log(data);
-            getRecipe(data);
+            // ingredientsCall(data)
+            embedFoodAnchors(data)
+            addSpoonPagination(q)
+        }
+    })
+}
+function nextSpoonCall(q, offset) {
+    $.ajax({
+        method: "GET",
+        url: `https://api.spoonacular.com/recipes/complexSearch`,
+        data: {
+            apiKey : KEYS.returnSpoonKey(),
+            query : q,
+            offset: offset,
+            number: 10,
+        },
+        success: function (data) {
+            console.log(data);
+            // ingredientsCall(data)
+            embedFoodAnchors(data)
         }
     })
 }
 
-//second call to spoontacular, -> returns more indepth results with given ID's
-function getRecipe(data) {
-    $.ajax({
-        method: "GET",
-        url: `https://api.spoonacular.com/recipes/${data.results[0].id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
-        success: function (data) {
-            console.log(data);
-            $("#recipe").html(`${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
-        }
+function embedFoodAnchors(data){
+
+    $("#recipe").html("");
+    data.results.forEach(function(result){
+        let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
+        console.log(el);
+        $("#recipe").append(el);
+        $("#recipe").append("<br>")
+        el.click(function(){
+            clickFoodAnchor(result)
+        })
+
+
     })
 
 }
-
-// decipher getRecipe com.codeup.capstonestarter.data into list items to append to html
+function clickFoodAnchor(result){
+    ingredientsCall(result)
+}
+function addSpoonPagination(q){
+    $("#prevspoon").toggleClass('d-none');
+    $("#morespoon").toggleClass('d-none');
+    $("#prevspoon").click(function(){
+        if (offset !== 0){
+            offset -= 10;
+        } else{
+            return;
+        }
+        console.log(offset)
+        nextSpoonCall(q, offset);
+    })
+    $("#morespoon").click(function(){
+        offset += 10;
+        nextSpoonCall(q, offset)
+    })
+}
 function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
+}
+
+
+function ingredientsCall(result) {
+    if ($("#prevspoon").hasClass('d-none')){
+        $("#prevspoon").toggleClass('d-none');
+    }
+    if ($("#morespoon").hasClass('d-none')) {
+        $("#morespoon").toggleClass('d-none');
+    }
+
+    $.ajax({
+        method: "GET",
+        url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
+        success: function (data) {
+            console.log(data);
+            $("#recipe").html(`<button id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#backbutton").click(function(){
+                nextSpoonCall(globalQ, offset)
+            })
+        }
+    })
+
 }
