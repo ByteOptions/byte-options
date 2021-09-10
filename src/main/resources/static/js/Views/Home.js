@@ -10,7 +10,7 @@ var geojson = {
 
 export default function Home() {
     return `  
-        <div id="recipe"></div> <div id="google_house"></div> <div id="recipe"></div>
+        <div><div id="recipe"></div><button class="d-none" id="prevspoon">Previous</button><button class="d-none" id="morespoon">More</button></div> <div id="google_house"></div> <div id="recipe"></div>
     <div id="map" style="width: 400px; height: 300px;"></div>\` <div id="youtubeBox"></div> 
         <button id="prevbtn" class="d-none">Previous</button> <button class="d-none" id="morebtn">More videos</button>`
 }
@@ -234,34 +234,136 @@ function combLocation(data) {
 
 
 //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS //
-//first snippet of us-3 (copy/pasted)
-// first call to spoontacular -> returns vague list of recipes with IDs
-function searchRecipes() {
-    let q = $("#inputMain").val();
+var offset = 0;
+var globalQ = "";
+
+function searchRecipes(q) {
+    globalQ = q;
     $.ajax({
         method: "GET",
-        url: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${KEYS.returnSpoonKey()}&query=${q}&offset=0&number=10`,
+        url: `https://api.spoonacular.com/recipes/complexSearch`,
+        data: {
+            apiKey : KEYS.returnSpoonKey(),
+            query : q,
+            offset: 0,
+            number: 10,
+        },
         success: function (data) {
             console.log(data);
-            getRecipe(data);
+            // ingredientsCall(data)
+            embedFoodAnchors(data)
+            addSpoonPagination(q)
         }
     })
 }
-//second call to spoontacular, -> returns more indepth results with given ID's
-function getRecipe(data){
+function nextSpoonCall(q, offset) {
     $.ajax({
         method: "GET",
-        url: `https://api.spoonacular.com/recipes/${data.results[0].id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
-        success: function(data){
+        url: `https://api.spoonacular.com/recipes/complexSearch`,
+        data: {
+            apiKey : KEYS.returnSpoonKey(),
+            query : q,
+            offset: offset,
+            number: 10,
+        },
+        success: function (data) {
             console.log(data);
-            $("#recipe").html(`${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            // ingredientsCall(data)
+            embedFoodAnchors(data)
+        }
+    })
+}
+
+function embedFoodAnchors(data){
+
+    $("#recipe").html("");
+    data.results.forEach(function(result){
+        let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
+        console.log(el);
+        $("#recipe").append(el);
+        $("#recipe").append("<br>")
+        el.click(function(){
+            clickFoodAnchor(result)
+        })
+
+
+    })
+
+}
+function clickFoodAnchor(result){
+    ingredientsCall(result)
+}
+function addSpoonPagination(q){
+    $("#prevspoon").toggleClass('d-none');
+    $("#morespoon").toggleClass('d-none');
+    $("#prevspoon").click(function(){
+        if (offset !== 0){
+            offset -= 10;
+        } else{
+            return;
+        }
+        console.log(offset)
+        nextSpoonCall(q, offset);
+    })
+    $("#morespoon").click(function(){
+        offset += 10;
+        nextSpoonCall(q, offset)
+    })
+}
+function returnIngredients(data) {
+    return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
+}
+
+
+function ingredientsCall(result) {
+    if ($("#prevspoon").hasClass('d-none')){
+        $("#prevspoon").toggleClass('d-none');
+    }
+    if ($("#morespoon").hasClass('d-none')) {
+        $("#morespoon").toggleClass('d-none');
+    }
+
+    $.ajax({
+        method: "GET",
+        url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
+        success: function (data) {
+            console.log(data);
+            $("#recipe").html(`<button id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#backbutton").click(function(){
+                nextSpoonCall(globalQ, offset)
+            })
         }
     })
 
 }
-// decipher getRecipe com.codeup.capstonestarter.data into list items to append to html
-function returnIngredients(data){
-    return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
-}
+//first snippet of us-3 (copy/pasted)
+// first call to spoontacular -> returns vague list of recipes with IDs
+// function searchRecipes() {
+//     let q = $("#inputMain").val();
+//     $.ajax({
+//         method: "GET",
+//         url: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${KEYS.returnSpoonKey()}&query=${q}&offset=0&number=10`,
+//         success: function (data) {
+//             console.log(data);
+//             getRecipe(data);
+//         }
+//     })
+// }
+// //second call to spoontacular, -> returns more indepth results with given ID's
+// function getRecipe(data){
+//     $.ajax({
+//         method: "GET",
+//         url: `https://api.spoonacular.com/recipes/${data.results[0].id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
+//         success: function(data){
+//             console.log(data);
+//             $("#recipe").html(`${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+//         }
+//     })
+//
+// }
+// // decipher getRecipe com.codeup.capstonestarter.data into list items to append to html
+// function returnIngredients(data){
+//     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
+// }
 
 //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // //SPOONTACULAR/NUTRITION FUNCTIONS // ^^^^^^
