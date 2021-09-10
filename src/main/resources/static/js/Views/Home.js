@@ -10,9 +10,27 @@ var geojson = {
 
 export default function Home() {
     return `  
+
         <div><div id="recipe"></div><button class="d-none" id="prevspoon">Previous</button><button class="d-none" id="morespoon">More</button></div> <div id="google_house"></div> <div id="recipe"></div>
     <div id="map" style="width: 400px; height: 300px;"></div>\` <div id="youtubeBox"></div> 
         <button id="prevbtn" class="d-none">Previous</button> <button class="d-none" id="morebtn">More videos</button>`
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" id="recipe"></div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-center flex-wrap">
+                    <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
+                    <button id="previous" class="d-none">Previous</button> 
+                    <button id="loadMore" class="d-none">More videos</button>
+                    <div id="google_house"></div>
+                    <div id="map" style="width: 300px; height: 250px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+         `
+
 }
 
 export function homeEvents() {
@@ -110,6 +128,14 @@ function addYoutubePagination(q){
     $("#prevbtn").click(function(){
         getNextVideo(q, prevPageToken);
 
+
+
+function setPrevEvent() {
+    $('#previous').on('click', function () {
+        page--;
+        getVideos();
+        console.log(page)
+
     })
 }
 // let page = 1;
@@ -182,10 +208,9 @@ function getLocations(q) {
 }
 
 
-
 function mapBox() {
     mapboxgl.accessToken = KEYS.returnMapboxKey();
-     map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-98.4936, 29.4241], // starting position [lng, lat]
@@ -196,7 +221,7 @@ function mapBox() {
 
 function createMarkers() {
 // add markers to map
-    for (const { geometry, properties } of geojson.features) {
+    for (const {geometry, properties} of geojson.features) {
 // create a HTML element for each feature
         const el = document.createElement('div');
         el.className = 'marker';
@@ -205,7 +230,7 @@ function createMarkers() {
         new mapboxgl.Marker()
             .setLngLat(geometry.coordinates)
             .setPopup(
-                new mapboxgl.Popup({ offset: 25 }) // add popups
+                new mapboxgl.Popup({offset: 25}) // add popups
                     .setHTML(
                         `<h3>${properties.title}</h3><p>${properties.description}</p>`
                     )
@@ -256,6 +281,7 @@ function searchRecipes(q) {
         }
     })
 }
+
 function nextSpoonCall(q, offset) {
     $.ajax({
         method: "GET",
@@ -266,6 +292,14 @@ function nextSpoonCall(q, offset) {
             offset: offset,
             number: 10,
         },
+
+
+//second call to spoontacular, -> returns more indepth results with given ID's
+function getRecipe(data) {
+    $.ajax({
+        method: "GET",
+        url: `https://api.spoonacular.com/recipes/${data.results[0].id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
+
         success: function (data) {
             console.log(data);
             // ingredientsCall(data)
@@ -310,6 +344,11 @@ function addSpoonPagination(q){
         nextSpoonCall(q, offset)
     })
 }
+
+
+
+// decipher getRecipe com.codeup.capstonestarter.data into list items to append to html
+
 function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
