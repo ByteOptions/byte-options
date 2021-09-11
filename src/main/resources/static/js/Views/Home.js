@@ -45,7 +45,7 @@ function searchClick() {
         // searchRecipes();
         getVideos(q)
         mapBox()
-        searchRecipes()
+        searchRecipes(q)
     })
 }
 
