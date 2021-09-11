@@ -5,3 +5,18 @@
 .recipestyle {
     border: 3px solid #008000;
 }
+
+.sun{
+    display: flex;
+    justify-content: center;
+}
+
+.address{
+    display: grid;
+    justify-content: center;
+    place-self: center;
+
+}
+h5{
+    margin-inline: auto;
+}
