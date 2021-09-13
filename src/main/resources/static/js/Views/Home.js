@@ -10,6 +10,32 @@ var geojson = {
 
 export default function Home() {
     return `  
+  <div id="background">
+            <div id="searchHouse" class="container">
+                <br/>
+                <div class="row justify-content-center">
+                    <div id="searchBox" class="col-12 col-md-10 col-lg-8">
+                        <form class="card card-sm">
+                            <div  class="card-body row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <i class="fas fa-search h4 text-body"></i>
+                                </div>
+                                <!--end of col-->
+                                <div class="col">
+                                    <input id="inputMain" class="form-control form-control-lg form-control-borderless"
+                                           type="search" placeholder="Search topics or keywords">
+                                </div>
+                                <!--end of col-->
+                                <div class="col-auto">
+                                    <button id="search" class="searchBtn" type="button">Search</button>
+                                </div>
+                                <!--end of col-->
+                            </div>
+                        </form>
+                    </div>
+                    <!--end of col-->
+                </div>
+            </div>
     <div class="container">
         <div class="row">
         <div class="col-md-8">
@@ -26,6 +52,8 @@ export default function Home() {
                     <br>
                     <div id="google_house"></div>
                     <div id="map" style="width: 300px; height: 250px;"></div>
+                    <a id="Ainfo"></a>
+
                 </div>
             </div>
         </div>
@@ -35,6 +63,10 @@ export default function Home() {
 
 export function homeEvents() {
     searchClick();
+}
+function scrollToAnchor(){
+    var aTag = $("#Ainfo");
+    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
 }
 
 function searchClick() {
@@ -46,6 +78,7 @@ function searchClick() {
         getVideos(q)
         mapBox()
         searchRecipes(q)
+        scrollToAnchor();
     })
 }
 
