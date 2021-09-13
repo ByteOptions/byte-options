@@ -1,4 +1,6 @@
 import * as KEYS from "../keys.js";
+import createView from "../createView.js";
+
 
 var map;
 
@@ -35,17 +37,18 @@ export default function Home() {
 
 export function homeEvents() {
     searchClick();
+
 }
 
 function searchClick() {
     $("#submit").click(function () {
         let q = $("#inputMain").val()
-        console.log(q);
+        // console.log(q);
         getLocations(q);
         // searchRecipes();
         getVideos(q)
         mapBox()
-        searchRecipes(q)
+
     })
 }
 
@@ -66,7 +69,7 @@ function getVideos(q) {
             videoEmbeddable: true,
         },
         success: function (data) {
-            console.log(data)
+            // console.log(data)
             nextPageToken = data.nextPageToken
             // getNextVideo(q, data.nextPageToken)
             embedData(data);
@@ -165,14 +168,49 @@ function createMarkers() {
         new mapboxgl.Marker()
             .setLngLat(geometry.coordinates)
             .setPopup(
-                new mapboxgl.Popup({offset: 25}) // add popups
+                new mapboxgl.Popup({offset: 10}) // add popups
                     .setHTML(
-                        `<h3>${properties.title}</h3><p>${properties.description}</p>`
+                        `<form class="popup-form"> 
+                        <p class="restaurantName">${properties.title}</p> 
+                        <br>
+                          <p class="vicinity">${properties.description}</p> 
+                        <button type="button" class="restaurantSave">Save</button> 
+                        </form>`
                     )
             )
             .addTo(map);
+        console.log("pop up added to map")
     }
 
+}
+
+function setSaveEvent(){
+    console.log("setting save events")
+
+    $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function (){
+        console.log($(this).siblings(".restaurantName").text())
+        let restaurantName = $(this).siblings(".restaurantName").text()
+        let vicinity = $(this).siblings(".vicinity").text()
+
+        let savedRestaurants = {
+            "name": restaurantName,
+            "vicinity" : vicinity
+        }
+
+        console.log(savedRestaurants)
+
+        let request = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(savedRestaurants)
+        };
+
+        fetch("http://localhost:8080/api/restaurants", request)
+            .then((response) => {
+                console.log(response.status)
+                createView("/");
+            });
+    })
 }
 
 function combLocation(data) {
@@ -185,10 +223,12 @@ function combLocation(data) {
             geometry: {type: 'Point', coordinates: [lng, lat]},
             properties: {title: `${result.name}`, description: `${result.vicinity}`}
         })
+        // console.log(data)
 
 
     });
     createMarkers();
+    setSaveEvent();
 }
 
 
@@ -227,7 +267,7 @@ function nextSpoonCall(q, offset) {
             number: 10,
         },
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             // ingredientsCall(data)
             embedFoodAnchors(data)
         }
@@ -262,7 +302,7 @@ function addSpoonPagination(q){
         } else{
             return;
         }
-        console.log(offset)
+        // console.log(offset)
         nextSpoonCall(q, offset);
     })
     $("#morespoon").click(function(){
