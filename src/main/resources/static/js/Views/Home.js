@@ -36,27 +36,29 @@ export default function Home() {
                     <!--end of col-->
                 </div>
             </div>
-    <div class="container">
+            <div id="info" class="container">
+    <div class="">
         <div class="row">
         <div class="col-md-8">
             <div id="recipe"></div>
-            <button id="prevspoon" class="d-none">Previous</button>
-            <button id="morespoon" class="d-none">More</button>
+            <button id="prevspoon" class="d-none homeBtn">Previous</button>
+            <button id="morespoon" class="d-none homeBtn">More</button>
             </div>
             <div class="col-md-4">
-                <div class="d-flex justify-content-center flex-wrap">
+                <div id="big-box" class="d-flex justify-content-center flex-wrap">
                     <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
                     <br>
-                    <button id="prevbtn" class="d-none">Previous</button> 
-                    <button id="morebtn" class="d-none" >More videos</button>
+                    <button id="prevbtn" class="d-none homeBtn">Previous</button> 
+                    <button id="morebtn" class="d-none homeBtn" >More videos</button>
                     <br>
                     <div id="google_house"></div>
-                    <div id="map" style="width: 300px; height: 250px;"></div>
+                    <div class="m-3" id="map" style="width: 300px; height: 250px;"></div>
                     <a id="Ainfo"></a>
 
                 </div>
             </div>
         </div>
+    </div>
     </div>
          `
 }
@@ -145,7 +147,7 @@ function embedData(data) {
     let dataArr = data.items
     dataArr.forEach(function (video) {
         $("#youtubeBox").append(`
-            <iframe class="videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
+            <iframe class="m-3 videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>`)
@@ -321,7 +323,7 @@ function ingredientsCall(result) {
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#recipe").html(`<button class="homeBtn" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
             })
