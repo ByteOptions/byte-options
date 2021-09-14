@@ -47,11 +47,12 @@
     box-shadow: 5px 5px 15px 5px #191414;
 }
 
-}
+
 #registerForm{
 
     -webkit-box-shadow: 5px 5px 15px 5px #191414;
     box-shadow: 5px 5px 15px 5px #191414;
+}
 #recipe {
     background-color: #1FC58E;
     padding: 10px;
