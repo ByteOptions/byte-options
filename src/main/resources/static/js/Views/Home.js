@@ -22,20 +22,16 @@ export default function Home() {
                                 <div class="col-auto">
                                     <i class="fas fa-search h4 text-body"></i>
                                 </div>
-                                <!--end of col-->
                                 <div class="col">
                                     <input id="inputMain" class="form-control form-control-lg form-control-borderless"
                                            type="search" placeholder="Search topics or keywords">
                                 </div>
-                                <!--end of col-->
                                 <div class="col-auto">
-                                    <button id="search" class="searchBtn" type="button">Search</button>
+                                    <button id="submit" class="searchBtn" type="button">Search</button>
                                 </div>
-                                <!--end of col-->
                             </div>
                         </form>
                     </div>
-                    <!--end of col-->
                 </div>
             </div>
             <div id="info" class="container">
