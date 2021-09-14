@@ -78,7 +78,6 @@ function searchClick() {
         let q = $("#inputMain").val()
         console.log(q);
         getLocations(q);
-        // searchRecipes();
         getVideos(q)
         mapBox()
         searchRecipes(q)
@@ -149,13 +148,43 @@ function embedData(data) {
     let dataArr = data.items
     dataArr.forEach(function (video) {
         $("#youtubeBox").append(`
-            <iframe class="m-3 videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
+            <iframe  class="m-3 videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>`)
+                allowfullscreen> 
+                 </iframe><button data-value="${video.snippet.title}" data-id="${video.id.videoId}" type="button" class="videoSave">Save Video</button>`)
 
     })
+
+    setVideoSaveEvent()
 }
+
+function setVideoSaveEvent(){
+   $(".videoSave").click(function (){
+      let videoid = ($(this).attr("data-id"));
+      let title = ($(this).attr("data-value"))
+       console.log(videoid);
+       console.log(title);
+
+       let saveVideos={
+           "videoID": videoid,
+           "title": title
+       }
+       console.log(saveVideos)
+       console.log(JSON.stringify(saveVideos))
+       let request = {
+           method: "POST",
+           headers: {"Content-Type": "application/json"},
+           body: JSON.stringify(saveVideos)
+       };
+
+       fetch("http://localhost:8080/api/videos", request)
+           .then((response) => {
+               console.log(response.status)
+           });
+   })
+}
+
 function addYoutubePagination(q){
     $("#morebtn").click(function(){
         getNextVideo(q, nextPageToken);
