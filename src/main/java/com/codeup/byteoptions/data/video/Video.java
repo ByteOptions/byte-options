@@ -1,10 +1,10 @@
-package com.codeup.byteoptions.data.youtube;
+package com.codeup.byteoptions.data.video;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="videos")
-public class Youtube {
+public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +16,13 @@ public class Youtube {
     @Column(nullable = false)
     private String title;
 
-    public Youtube(Long id, String videoID, String title) {
+    public Video(Long id, String videoID, String title) {
         this.id = id;
         this.videoID = videoID;
         this.title = title;
     }
 
-    public Youtube(){
+    public Video(){
     }
 
     public Long getId() {
