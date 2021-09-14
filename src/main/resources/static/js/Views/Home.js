@@ -36,7 +36,7 @@ export default function Home() {
 
 export function homeEvents() {
     searchClick();
-    saveRecipe();
+    // saveRecipe();
 }
 
 function searchClick() {
@@ -299,7 +299,7 @@ function ingredientsCall(result) {
 
 // Function to create join table between user and recipe ID
 function saveRecipe(result){
-    console.log(result)
+    console.log(result.id)
     let recipeID = result.id
 
     let request = {
@@ -307,8 +307,8 @@ function saveRecipe(result){
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(recipeID)
     };
-
-    fetch("http://localhost:8080/api/recipes", request)
+    console.log(recipeID, request)
+    fetch(`http://localhost:8080/api/recipes/${recipeID}`, request)
         .then((response) => {
             console.log(response.status)
             createView("/")

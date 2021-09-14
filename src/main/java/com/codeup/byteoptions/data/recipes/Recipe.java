@@ -11,39 +11,35 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
-    private long recipeID;
+    private Long recipeID;
 
-    @ManyToOne
-    @JsonIgnoreProperties({"password"})
-    private User user;
+//    @ManyToOne
+//    @JsonIgnoreProperties({"password"})
+//    private User user;
+
+    public Recipe(Long recipeID) {
+        this.recipeID = recipeID;
+    }
 
     public Recipe() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getRecipeID() {
-        return recipeID;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setRecipeID(long recipeID) {
-        this.recipeID = recipeID;
+    public Long getRecipeID() {
+        return recipeID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRecipeID(Long recipeID) {
+        this.recipeID = recipeID;
     }
 }

@@ -25,9 +25,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties("user")
-    private Collection<Recipe> recipes;
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnoreProperties("user")
+//    private Collection<Recipe> recipes;
 
     public User(Long id, String username, String email, String password) {
         this.id = id;

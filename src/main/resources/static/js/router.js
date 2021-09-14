@@ -16,7 +16,7 @@ export default function router(URI) {
         '/': {
             returnView: Home,
             state: {
-                recipes: '/api/recipes'
+                // recipes: '/api/recipes'
             },
             uri: '/',
             title: 'Home',
