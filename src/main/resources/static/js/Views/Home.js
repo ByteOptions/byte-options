@@ -1,4 +1,6 @@
 import * as KEYS from "../keys.js";
+import createView from "../createView.js";
+
 
 var map;
 
@@ -200,14 +202,47 @@ function createMarkers() {
         new mapboxgl.Marker()
             .setLngLat(geometry.coordinates)
             .setPopup(
-                new mapboxgl.Popup({offset: 25}) // add popups
+                new mapboxgl.Popup({offset: 10}) // add popups
                     .setHTML(
-                        `<h3>${properties.title}</h3><p>${properties.description}</p>`
+                        `<form class="popup-form"> 
+                        <p class="restaurantName">${properties.title}</p> 
+                        <br>
+                          <p class="vicinity">${properties.description}</p> 
+                        <button type="button" class="restaurantSave">Save</button> 
+                        </form>`
                     )
             )
             .addTo(map);
     }
 
+}
+
+function setSaveEvent(){
+
+    $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function (){
+        console.log($(this).siblings(".restaurantName").text())
+        let restaurantName = $(this).siblings(".restaurantName").text()
+        let vicinity = $(this).siblings(".vicinity").text()
+
+        let savedRestaurants = {
+            "name": restaurantName,
+            "vicinity" : vicinity
+        }
+
+        console.log(savedRestaurants)
+
+        let request = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(savedRestaurants)
+        };
+
+        fetch("http://localhost:8080/api/restaurants", request)
+            .then((response) => {
+                console.log(response.status)
+                createView("/");
+            });
+    })
 }
 
 function combLocation(data) {
@@ -224,6 +259,7 @@ function combLocation(data) {
 
     });
     createMarkers();
+    setSaveEvent();
 }
 
 
