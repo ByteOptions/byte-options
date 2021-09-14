@@ -17,6 +17,17 @@
     place-self: center;
 
 }
+#registerForm{
+
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
 h5{
     margin-inline: auto;
 }
+
+/*@media (min-width: 1025px) {*/
+/*    .h-custom {*/
+/*        height: 1000px !important;*/
+/*    }*/
+/*}*/
