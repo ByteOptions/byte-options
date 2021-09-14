@@ -1,4 +1,5 @@
 import * as KEYS from "../keys.js";
+import createView from "../createView.js";
 
 var map;
 
@@ -59,7 +60,7 @@ function getVideos(q) {
         url: 'https://www.googleapis.com/youtube/v3/search',
         data: {
             key: KEYS.returnGoogleKey(),
-            q: `${q} recipes`,
+            q: `${q} recipe`,
             part: 'snippet',
             maxResults: 2,
             type: 'video',
@@ -81,13 +82,14 @@ function getVideos(q) {
         }
     });
 }
+
 function getNextVideo(q, pageToken) {
     $.ajax({
         method: 'GET',
         url: 'https://www.googleapis.com/youtube/v3/search',
         data: {
             key: KEYS.returnGoogleKey(),
-            q: `${q} recipes`,
+            q: `${q} recipe`,
             part: 'snippet',
             maxResults: 2,
             type: 'video',
@@ -106,7 +108,6 @@ function getNextVideo(q, pageToken) {
     });
 }
 
-
 function embedData(data) {
     $("#youtubeBox").html("");
     let dataArr = data.items
@@ -115,10 +116,10 @@ function embedData(data) {
             <iframe class="videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>`)
-
+                allowfullscreen></iframe><button id="savevid">Add to Favorites</button>`)
     })
 }
+
 function addYoutubePagination(q){
     $("#morebtn").click(function(){
         getNextVideo(q, nextPageToken);
@@ -142,7 +143,7 @@ function getLocations(q) {
     })
 }
 
-
+//Mapbox Functions//Mapbox Functions//Mapbox Functions//Mapbox Functions//Mapbox Functions//
 function mapBox() {
     mapboxgl.accessToken = KEYS.returnMapboxKey();
     map = new mapboxgl.Map({
@@ -172,7 +173,6 @@ function createMarkers() {
             )
             .addTo(map);
     }
-
 }
 
 function combLocation(data) {
@@ -185,8 +185,6 @@ function combLocation(data) {
             geometry: {type: 'Point', coordinates: [lng, lat]},
             properties: {title: `${result.name}`, description: `${result.vicinity}`}
         })
-
-
     });
     createMarkers();
 }
@@ -197,6 +195,7 @@ function combLocation(data) {
 var offset = 0;
 var globalQ = "";
 
+//Spoonacular API Functions//Spoonacular API Functions//Spoonacular API Functions//Spoonacular API Functions
 function searchRecipes(q) {
     globalQ = q;
     $.ajax({
@@ -240,23 +239,19 @@ function embedFoodAnchors(data){
     data.results.forEach(function(result){
         let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
         console.log(el);
-        $("#recipe").append(el);
-        $("#recipe").append("<br>")
+        $("#recipe").append(el).append("<br>")
         el.click(function(){
             clickFoodAnchor(result)
         })
-
-
     })
-
 }
+
 function clickFoodAnchor(result){
     ingredientsCall(result)
 }
+
 function addSpoonPagination(q){
-    $("#prevspoon").toggleClass('d-none');
-    $("#morespoon").toggleClass('d-none');
-    $("#prevspoon").click(function(){
+    $("#prevspoon").toggleClass('d-none').click(function(){
         if (offset !== 0){
             offset -= 10;
         } else{
@@ -265,34 +260,56 @@ function addSpoonPagination(q){
         console.log(offset)
         nextSpoonCall(q, offset);
     })
-    $("#morespoon").click(function(){
+    $("#morespoon").toggleClass('d-none').click(function(){
         offset += 10;
         nextSpoonCall(q, offset)
     })
 }
+
 function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
 
-
 function ingredientsCall(result) {
-    if ($("#prevspoon").hasClass('d-none')){
+    // if ($("#prevspoon").hasClass('d-none')){
         $("#prevspoon").toggleClass('d-none');
-    }
-    if ($("#morespoon").hasClass('d-none')) {
+    // }
+    // if ($("#morespoon").hasClass('d-none')) {
         $("#morespoon").toggleClass('d-none');
-    }
-
+    // }
     $.ajax({
         method: "GET",
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#recipe").html(`<button id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}
+               <br> <button id="saverecipe">Save Recipe</button>`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
+                $("#prevspoon").toggleClass('d-none');
+                $("#morespoon").toggleClass('d-none');
+            })
+            $("#saverecipe").click(function (){
+                saveRecipe(data);
             })
         }
     })
+}
 
+// Function to create join table between user and recipe ID
+function saveRecipe(result){
+    console.log(result)
+    let recipeID = result.id
+
+    let request = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(recipeID)
+    };
+
+    fetch("http://localhost:8080/api/users", request)
+        .then((response) => {
+            console.log(response.status)
+            createView("/")
+        });
 }
