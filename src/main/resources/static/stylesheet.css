@@ -2,20 +2,20 @@
     background-color: forestgreen;
 }
 
-/*.sun{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*}*/
+.sun{
+    display: flex;
+    justify-content: center;
+}
 
-/*.address{*/
-/*    display: grid;*/
-/*    justify-content: center;*/
-/*    place-self: center;*/
+.address{
+    display: grid;
+    justify-content: center;
+    place-self: center;
 
-/*}*/
-/*h5{*/
-/*    margin-inline: auto;*/
-/*}*/
+}
+h5{
+    margin-inline: auto;
+}
 
 #background {
     width: 100%;
