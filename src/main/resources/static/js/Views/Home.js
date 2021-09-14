@@ -45,7 +45,7 @@ function searchClick() {
         let q = $("#inputMain").val()
         // console.log(q);
         getLocations(q);
-        // searchRecipes();
+        searchRecipes(q);
         getVideos(q)
         mapBox()
 
@@ -121,6 +121,7 @@ function embedData(data) {
                 allowfullscreen></iframe>`)
 
     })
+    console.log(data)
 }
 function addYoutubePagination(q){
     $("#morebtn").click(function(){
@@ -138,8 +139,7 @@ function getLocations(q) {
         method: "GET",
         url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=29.4241%2C-98.4936&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
         success: function (data) {
-            console.log(data);
-            console.log("locations")
+            // console.log(data);
             combLocation(data);
         }
     })
@@ -179,13 +179,11 @@ function createMarkers() {
                     )
             )
             .addTo(map);
-        console.log("pop up added to map")
     }
 
 }
 
 function setSaveEvent(){
-    console.log("setting save events")
 
     $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function (){
         console.log($(this).siblings(".restaurantName").text())
@@ -249,8 +247,8 @@ function searchRecipes(q) {
             number: 10,
         },
         success: function (data) {
-            console.log(data);
-            // ingredientsCall(data)
+            // console.log(data);
+            ingredientsCall(data)
             embedFoodAnchors(data)
             addSpoonPagination(q)
         }
@@ -267,8 +265,8 @@ function nextSpoonCall(q, offset) {
             number: 10,
         },
         success: function (data) {
-            // console.log(data);
-            // ingredientsCall(data)
+            console.log(data);
+            ingredientsCall(data)
             embedFoodAnchors(data)
         }
     })
@@ -279,7 +277,7 @@ function embedFoodAnchors(data){
     $("#recipe").html("");
     data.results.forEach(function(result){
         let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
-        console.log(el);
+        // console.log(el);
         $("#recipe").append(el);
         $("#recipe").append("<br>")
         el.click(function(){
@@ -302,7 +300,7 @@ function addSpoonPagination(q){
         } else{
             return;
         }
-        // console.log(offset)
+        console.log(offset)
         nextSpoonCall(q, offset);
     })
     $("#morespoon").click(function(){
