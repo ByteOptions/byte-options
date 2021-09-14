@@ -1,9 +1,11 @@
 package com.codeup.byteoptions.data.user;
 
+import com.codeup.byteoptions.data.recipes.Recipe;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.Collection;
 
 @Entity
 @Table(name="users")
@@ -23,7 +25,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private Collection<Recipe> recipes;
 
     public User(Long id, String username, String email, String password) {
         this.id = id;

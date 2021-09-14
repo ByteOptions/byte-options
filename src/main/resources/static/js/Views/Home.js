@@ -36,6 +36,7 @@ export default function Home() {
 
 export function homeEvents() {
     searchClick();
+    saveRecipe();
 }
 
 function searchClick() {
@@ -307,7 +308,7 @@ function saveRecipe(result){
         body: JSON.stringify(recipeID)
     };
 
-    fetch("http://localhost:8080/api/users", request)
+    fetch("http://localhost:8080/api/recipes", request)
         .then((response) => {
             console.log(response.status)
             createView("/")

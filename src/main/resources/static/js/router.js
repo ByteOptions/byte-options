@@ -15,7 +15,9 @@ export default function router(URI) {
     const routes = {
         '/': {
             returnView: Home,
-            state: {},
+            state: {
+                recipes: '/api/recipes'
+            },
             uri: '/',
             title: 'Home',
             viewEvent: homeEvents,
