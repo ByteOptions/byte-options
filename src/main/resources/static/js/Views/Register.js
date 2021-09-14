@@ -2,74 +2,80 @@ import createView from "../createView.js";
 
 export default function Register(props){
     return `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Register</title>
-</head>
-<body>
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
+<section  class="h-100 h-custom" style="background-color: #1FC58E; height: 1000px;">
+  <div class="container py-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+      <div class="col-lg-8 col-xl-6">
+        <div id="registerForm" class="card rounded-3">
+          <img src="./img/registerFoodPicture.jpeg" class="w-100" style="height: 300px; border-top-left-radius: .3rem; border-top-right-radius: .3rem; object-fit: cover;" alt="Sample photo">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration Info</h3>
 
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Register An Account</p>
+            <form class="px-md-2">
 
-                <form class="mx-1 mx-md-4">
+              <div class="form-outline mb-4">
+                <input type="text" id="form3Example1q" class="form-control" />
+                <label class="form-label" for="form3Example1q">Name</label>
+              </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input id="usernameInput" type="text" class="form-control" />
-                      <label class="form-label" for="form3Example1c">Username</label>
-                    </div>
+              <div class="row">
+                <div class="col-md-6 mb-4">
+
+                  <div class="form-outline datepicker">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleDatepicker1"
+                    />
+                    <label for="exampleDatepicker1" class="form-label">Select a date</label>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input id="emailInput" type="email" class="form-control" />
-                      <label class="form-label" for="form3Example3c">Email</label>
-                    </div>
-                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input id="passwordInput" type="password" class="form-control" />
-                      <label class="form-label" for="form3Example4c">Password</label>
-                    </div>
-                  </div>
+                  <select class="select">
+                    <option value="1" disabled>Gender</option>
+                    <option value="2">Female</option>
+                    <option value="3">Male</option>
+                    <option value="4">Other</option>
+                  </select>
 
-<!--                  <div class="d-flex flex-row align-items-center mb-4">-->
-<!--                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>-->
-<!--                    <div class="form-outline flex-fill mb-0">-->
-<!--                      <input id="passwordConfirmInput" type="password" class="form-control" />-->
-<!--                      <label class="form-label" for="form3Example4cd">Confirm Password</label>-->
-<!--                    </div>-->
-<!--                  </div>-->
+                </div>
+              </div>
 
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button id="registerButton" type="button" class="btn btn-primary btn-lg">Register</button>
-                  </div>
+              <div class="mb-4">
 
-                </form>
+                <select class="select">
+                  <option value="1" disabled>Class</option>
+                  <option value="2">Class 1</option>
+                  <option value="3">Class 2</option>
+                  <option value="4">Class 3</option>
+                </select>
 
               </div>
-            </div>
+
+              <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                <div class="col-md-6">
+
+                  <div class="form-outline">
+                    <input type="text" id="form3Example1w" class="form-control" />
+                    <label class="form-label" for="form3Example1w">Registration code</label>
+                  </div>
+
+                </div>
+              </div>
+
+              <button type="submit" style="background-color: #1FC58E" class="btn btn-lg mb-1">Submit</button>
+
+            </form>
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-</body>
-</html>`;
+`;
 }
 
 export function createRegisterEvents(){
