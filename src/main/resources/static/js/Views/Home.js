@@ -153,6 +153,7 @@ function embedData(data) {
     })
 
     setVideoSaveEvent()
+
 }
 
 function setVideoSaveEvent(){
@@ -204,7 +205,7 @@ function getLocations(q) {
     })
 }
 
-
+//Mapbox Functions//Mapbox Functions//Mapbox Functions//Mapbox Functions//Mapbox Functions//
 function mapBox() {
     mapboxgl.accessToken = KEYS.returnMapboxKey();
     map = new mapboxgl.Map({
@@ -293,6 +294,7 @@ function combLocation(data) {
 var offset = 0;
 var globalQ = "";
 
+//Spoonacular API Functions//Spoonacular API Functions//Spoonacular API Functions//Spoonacular API Functions
 function searchRecipes(q) {
     globalQ = q;
     $.ajax({
@@ -349,6 +351,7 @@ function embedFoodAnchors(data){
 function clickFoodAnchor(result){
     ingredientsCall(result)
 }
+
 function addSpoonPagination(q){
     $("#prevspoon").toggleClass('d-none');
     $("#morespoon").toggleClass('d-none');
@@ -366,6 +369,7 @@ function addSpoonPagination(q){
         nextSpoonCall(q, offset)
     })
 }
+
 function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
@@ -388,7 +392,27 @@ function ingredientsCall(result) {
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
             })
+            $("#saverecipe").click(function (){
+                saveRecipe(data);
+            })
         }
     })
+}
 
+// Function to create join table between user and recipe ID
+function saveRecipe(result){
+    console.log(result.id)
+    let recipeID = result.id
+
+    let request = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(recipeID)
+    };
+    console.log(recipeID, request)
+    fetch(`http://localhost:8080/api/recipes/${recipeID}`, request)
+        .then((response) => {
+            console.log(response.status)
+            createView("/")
+        });
 }

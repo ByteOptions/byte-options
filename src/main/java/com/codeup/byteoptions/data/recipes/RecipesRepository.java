@@ -1,4 +1,6 @@
 package com.codeup.byteoptions.data.recipes;
 
-public interface RecipesRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RecipesRepository extends JpaRepository<Recipe, Long> {
 }
