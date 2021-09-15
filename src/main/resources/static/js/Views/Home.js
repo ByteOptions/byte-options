@@ -153,6 +153,7 @@ function embedData(data) {
     })
 
     setVideoSaveEvent()
+
 }
 
 function setVideoSaveEvent(){
@@ -390,8 +391,6 @@ function ingredientsCall(result) {
             $("#recipe").html(`<button class="homeBtn" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
-                $("#prevspoon").toggleClass('d-none');
-                $("#morespoon").toggleClass('d-none');
             })
             $("#saverecipe").click(function (){
                 saveRecipe(data);
