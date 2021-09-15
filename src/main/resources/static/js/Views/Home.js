@@ -1,6 +1,7 @@
 import * as KEYS from "../keys.js";
 import createView from "../createView.js";
 
+
 var map;
 
 var geojson = {
@@ -11,32 +12,61 @@ var geojson = {
 
 export default function Home() {
     return `  
-    <div class="container">
+  <div id="background">
+            <div id="searchHouse" class="container">
+                <br/>
+                <div class="row justify-content-center">
+                    <div id="searchBox" class="col-12 col-md-10 col-lg-8">
+                        <form class="card card-sm">
+                            <div  class="card-body row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <i class="fas fa-search h4 text-body"></i>
+                                </div>
+                                <div class="col">
+                                    <input id="inputMain" class="form-control form-control-lg form-control-borderless"
+                                           type="search" placeholder="Search topics or keywords">
+                                </div>
+                                <div class="col-auto">
+                                    <button id="submit" class="searchBtn" type="button">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="info" class="container">
+    <div class="">
         <div class="row">
         <div class="col-md-8">
             <div id="recipe"></div>
-            <button id="prevspoon" class="d-none">Previous</button>
-            <button id="morespoon" class="d-none">More</button>
+            <button id="prevspoon" class="d-none homeBtn">Previous</button>
+            <button id="morespoon" class="d-none homeBtn">More</button>
             </div>
             <div class="col-md-4">
-                <div class="d-flex justify-content-center flex-wrap">
+                <div id="big-box" class="d-flex justify-content-center flex-wrap">
                     <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
                     <br>
-                    <button id="prevbtn" class="d-none">Previous</button> 
-                    <button id="morebtn" class="d-none" >More videos</button>
+                    <button id="prevbtn" class="d-none homeBtn">Previous</button> 
+                    <button id="morebtn" class="d-none homeBtn" >More videos</button>
                     <br>
                     <div id="google_house"></div>
-                    <div id="map" style="width: 300px; height: 250px;"></div>
+                    <div class="m-3" id="map" style="width: 300px; height: 250px;"></div>
+                    <a id="Ainfo"></a>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
          `
 }
 
 export function homeEvents() {
     searchClick();
-    // saveRecipe();
+}
+function scrollToAnchor(){
+    var aTag = $("#Ainfo");
+    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
 }
 
 function searchClick() {
@@ -44,10 +74,10 @@ function searchClick() {
         let q = $("#inputMain").val()
         console.log(q);
         getLocations(q);
-        // searchRecipes();
         getVideos(q)
         mapBox()
         searchRecipes(q)
+        scrollToAnchor();
     })
 }
 
@@ -61,7 +91,7 @@ function getVideos(q) {
         url: 'https://www.googleapis.com/youtube/v3/search',
         data: {
             key: KEYS.returnGoogleKey(),
-            q: `${q} recipe`,
+            q: `${q} recipes`,
             part: 'snippet',
             maxResults: 2,
             type: 'video',
@@ -83,14 +113,13 @@ function getVideos(q) {
         }
     });
 }
-
 function getNextVideo(q, pageToken) {
     $.ajax({
         method: 'GET',
         url: 'https://www.googleapis.com/youtube/v3/search',
         data: {
             key: KEYS.returnGoogleKey(),
-            q: `${q} recipe`,
+            q: `${q} recipes`,
             part: 'snippet',
             maxResults: 2,
             type: 'video',
@@ -109,16 +138,47 @@ function getNextVideo(q, pageToken) {
     });
 }
 
+
 function embedData(data) {
     $("#youtubeBox").html("");
     let dataArr = data.items
     dataArr.forEach(function (video) {
         $("#youtubeBox").append(`
-            <iframe class="videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
+            <iframe  class="m-3 videoBox col-auto" src="https://www.youtube.com/embed/${video.id.videoId}" title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe><button id="savevid">Add to Favorites</button>`)
+                allowfullscreen> 
+                 </iframe><button data-value="${video.snippet.title}" data-id="${video.id.videoId}" type="button" class="videoSave">Save Video</button>`)
+
     })
+
+    setVideoSaveEvent()
+}
+
+function setVideoSaveEvent(){
+   $(".videoSave").click(function (){
+      let videoid = ($(this).attr("data-id"));
+      let title = ($(this).attr("data-value"))
+       console.log(videoid);
+       console.log(title);
+
+       let saveVideos={
+           "videoID": videoid,
+           "title": title
+       }
+       console.log(saveVideos)
+       console.log(JSON.stringify(saveVideos))
+       let request = {
+           method: "POST",
+           headers: {"Content-Type": "application/json"},
+           body: JSON.stringify(saveVideos)
+       };
+
+       fetch("http://localhost:8080/api/videos", request)
+           .then((response) => {
+               console.log(response.status)
+           });
+   })
 }
 
 function addYoutubePagination(q){
@@ -167,13 +227,47 @@ function createMarkers() {
         new mapboxgl.Marker()
             .setLngLat(geometry.coordinates)
             .setPopup(
-                new mapboxgl.Popup({offset: 25}) // add popups
+                new mapboxgl.Popup({offset: 10}) // add popups
                     .setHTML(
-                        `<h3>${properties.title}</h3><p>${properties.description}</p>`
+                        `<form class="popup-form"> 
+                        <p class="restaurantName">${properties.title}</p> 
+                        <br>
+                          <p class="vicinity">${properties.description}</p> 
+                        <button type="button" class="restaurantSave">Save</button> 
+                        </form>`
                     )
             )
             .addTo(map);
     }
+
+}
+
+function setSaveEvent(){
+
+    $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function (){
+        console.log($(this).siblings(".restaurantName").text())
+        let restaurantName = $(this).siblings(".restaurantName").text()
+        let vicinity = $(this).siblings(".vicinity").text()
+
+        let savedRestaurants = {
+            "name": restaurantName,
+            "vicinity" : vicinity
+        }
+
+        console.log(savedRestaurants)
+
+        let request = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(savedRestaurants)
+        };
+
+        fetch("http://localhost:8080/api/restaurants", request)
+            .then((response) => {
+                console.log(response.status)
+                createView("/");
+            });
+    })
 }
 
 function combLocation(data) {
@@ -186,8 +280,11 @@ function combLocation(data) {
             geometry: {type: 'Point', coordinates: [lng, lat]},
             properties: {title: `${result.name}`, description: `${result.vicinity}`}
         })
+
+
     });
     createMarkers();
+    setSaveEvent();
 }
 
 
@@ -240,19 +337,24 @@ function embedFoodAnchors(data){
     data.results.forEach(function(result){
         let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
         console.log(el);
-        $("#recipe").append(el).append("<br>")
+        $("#recipe").append(el);
+        $("#recipe").append("<br>")
         el.click(function(){
             clickFoodAnchor(result)
         })
-    })
-}
 
+
+    })
+
+}
 function clickFoodAnchor(result){
     ingredientsCall(result)
 }
 
 function addSpoonPagination(q){
-    $("#prevspoon").toggleClass('d-none').click(function(){
+    $("#prevspoon").toggleClass('d-none');
+    $("#morespoon").toggleClass('d-none');
+    $("#prevspoon").click(function(){
         if (offset !== 0){
             offset -= 10;
         } else{
@@ -261,7 +363,7 @@ function addSpoonPagination(q){
         console.log(offset)
         nextSpoonCall(q, offset);
     })
-    $("#morespoon").toggleClass('d-none').click(function(){
+    $("#morespoon").click(function(){
         offset += 10;
         nextSpoonCall(q, offset)
     })
@@ -271,20 +373,21 @@ function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
 
+
 function ingredientsCall(result) {
-    // if ($("#prevspoon").hasClass('d-none')){
+    if ($("#prevspoon").hasClass('d-none')){
         $("#prevspoon").toggleClass('d-none');
-    // }
-    // if ($("#morespoon").hasClass('d-none')) {
+    }
+    if ($("#morespoon").hasClass('d-none')) {
         $("#morespoon").toggleClass('d-none');
-    // }
+    }
+
     $.ajax({
         method: "GET",
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}
-               <br> <button id="saverecipe">Save Recipe</button>`)
+            $("#recipe").html(`<button class="homeBtn" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
                 $("#prevspoon").toggleClass('d-none');

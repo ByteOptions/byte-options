@@ -1,10 +1,9 @@
-#app{
-    background-color: forestgreen;
+
+html{
+    background: #1FC58E;
 }
 
-.recipestyle {
-    border: 3px solid #008000;
-}
+
 
 .sun{
     display: flex;
@@ -19,4 +18,116 @@
 }
 h5{
     margin-inline: auto;
+}
+
+#background {
+    width: 100%;
+    /*height: 800px;*/
+    background-image: url("/img/home-photo.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.videoBox {
+    border-radius: 25px;
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+
+#big-box {
+    border-radius: 25px;
+    padding: 10px;
+    background-color: #1FC58E;
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+
+#map {
+    border-radius: 25px;
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+
+
+#registerForm{
+
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+
+#recipe {
+    background-color: #1FC58E;
+    padding: 10px;
+
+    border-radius: 25px;
+    border: 2px #191414 SOLID;
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+.searchBtn{
+    color: #191414;
+    font-size: 15px;
+    line-height: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    font-family: Georgia, serif;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    background-color: rgb(250, 230, 45);
+    /*box-shadow: rgba(0, 0, 0, 0.76) 5px 5px 47px 9px;*/
+    /*border: 2px solid #1FC58E;*/
+    display: inline-block;
+}
+.searchBtn:hover{
+    background: #1C6EA4;
+}
+.homeBtn:active {
+    background: #144E75;
+}
+
+.homeBtn {
+    margin: 10px;
+    color: #191414;
+    font-size: 15px;
+    line-height: 15px;
+    padding: 6px;
+    border-radius: 12px;
+    font-family: Georgia, serif;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    background-color: rgb(250, 230, 45);
+    /*box-shadow: rgba(0, 0, 0, 0.76) 5px 5px 47px 9px;*/
+    /*border: 2px solid #1FC58E;*/
+    display: inline-block;
+}
+.homeBtn:hover {
+    background: #1C6EA4;
+}
+.homeBtn:active {
+    background: #144E75;
+}
+#searchBox{
+    margin-top: 400px;
+}
+#info{
+    margin-top: 750px;
+    background-color: #DBD3D9;
+}
+
+/*navbar*/
+#nav-container {
+    background: #1FC58E;
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+.nav-item{
+    colo: black;
 }

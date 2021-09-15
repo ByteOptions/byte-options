@@ -1,25 +1,36 @@
 export default function Navbar() {
-    return `<h1>ByteOptions</h1>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#"></a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Recipes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Account</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input id="inputMain" class="form-control me-2" type="text" placeholder="Search" aria-label="Search">
-        <button id="submit" class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>`
+    return `<nav class="navbar navbar-expand-lg navbar-light p-0">
+            <div class="container-fluid" id="nav-container">
+                <a class="navbar-brand" data-link href="/">
+                    <img src="/img/16316362702731.png" alt="" width="auto" height="65"
+                         class="d-inline-block align-text-top">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" aria-current="page" href="/" data-link>Search</a>-->
+<!--                        </li>-->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/restaurants" data-link>Restaurants</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/recipes" data-link>Recipes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/me" data-link>Account</a>
+                        </li>
+
+
+
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" id="inputMain" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark" id="submit" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>`
 }
