@@ -333,29 +333,23 @@ function nextSpoonCall(q, offset) {
 }
 
 function embedFoodAnchors(data){
-
     $("#recipe").html("");
     data.results.forEach(function(result){
         let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
         console.log(el);
-        $("#recipe").append(el);
-        $("#recipe").append("<br>")
+        $("#recipe").append(el).append("<br>");
         el.click(function(){
             clickFoodAnchor(result)
         })
-
-
     })
-
 }
+
 function clickFoodAnchor(result){
     ingredientsCall(result)
 }
 
 function addSpoonPagination(q){
-    $("#prevspoon").toggleClass('d-none');
-    $("#morespoon").toggleClass('d-none');
-    $("#prevspoon").click(function(){
+    $("#prevspoon").toggleClass('d-none').click(function(){
         if (offset !== 0){
             offset -= 10;
         } else{
@@ -364,7 +358,7 @@ function addSpoonPagination(q){
         console.log(offset)
         nextSpoonCall(q, offset);
     })
-    $("#morespoon").click(function(){
+    $("#morespoon").toggleClass('d-none').click(function(){
         offset += 10;
         nextSpoonCall(q, offset)
     })
@@ -373,7 +367,6 @@ function addSpoonPagination(q){
 function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
-
 
 function ingredientsCall(result) {
     if ($("#prevspoon").hasClass('d-none')){
@@ -388,7 +381,8 @@ function ingredientsCall(result) {
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button class="homeBtn" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#recipe").html(`<button class="homeBtn" id="backbutton">Back</button> <br>${data.title}<br>
+            <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id='saverecipe'>Save Recipe</button>`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
             })
