@@ -3,7 +3,8 @@ body{
 }
 html{
     background: rgb(241,253,45);
-    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);}
+    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
+}
 
 .recipefont{
     font-family: 'Mallanna', sans-serif;
@@ -152,4 +153,38 @@ h5{
 }
 .nav-item{
     color: black;
+}
+
+.login {
+    min-height: 100vh;
+}
+
+.bg-image {
+    background-image: url('/img/asparagus.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+/*Login*/
+.login-heading {
+    font-weight: 300;
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+}
+
+#login-house{
+    padding: 50px;
+}
+#login-inner {
+    background: white;
+}
+#app{
+    background: rgb(241,253,45);
+    background: linear-gradient(
+            0deg
+            , rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
 }

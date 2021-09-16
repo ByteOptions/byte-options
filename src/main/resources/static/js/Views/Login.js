@@ -1,59 +1,50 @@
 
 export default function Login(props) {
     return `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Register</title>
-</head>
-<body>
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Welcome</p>
-
-                <form class="mx-1 mx-md-4">
-
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input id="username" type="email" id="form3Example3c" class="form-control" />
-                      <label class="form-label" for="form3Example3c">Email</label>
+<div id="login-house" class="container">
+    <div class="container-fluid ps-md-0">
+      <div id="login-row-start" class="row g-0">
+        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div class="col-md-8 col-lg-6">
+          <div id="login-inner" class="login d-flex align-items-center py-5">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-9 col-lg-8 mx-auto">
+                  <h3 class="login-heading mb-4">Welcome back!</h3>
+    
+                  <form>
+                    <div class="form-floating mb-3">
+                      <input id="emailInput" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                      <label for="floatingInput">Email address</label>
                     </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input id="password" type="password" id="form3Example4c" class="form-control" />
-                      <label class="form-label" for="form3Example4c">Password</label>
+                    <div class="form-floating mb-3">
+                      <input id="passwordInput" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                      <label for="floatingPassword">Password</label>
                     </div>
-                  </div>
-
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button id="login-btn" type="button" class="btn btn-primary btn-lg">Login</button>
-                  </div>
-
-                </form>
-
+    
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                      <label class="form-check-label" for="rememberPasswordCheck">
+                        Remember password
+                      </label>
+                    </div>
+    
+                    <div class="d-grid">
+                      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                      <div class="text-center">
+                        <a class="small" href="#">Forgot password?</a>
+                      </div>
+                    </div>
+    
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-</body>
-</html>`;
+</div>`;
 }
 
 export function loginEvents(){
