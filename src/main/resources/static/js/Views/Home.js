@@ -381,7 +381,8 @@ function ingredientsCall(result) {
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br>${data.title}<br>
+            <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id='saverecipe'>Save Recipe</button>`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
             })
