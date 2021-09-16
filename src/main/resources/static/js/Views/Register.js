@@ -14,8 +14,20 @@ export default function Register(props){
             <form class="px-md-2">
 
               <div class="form-outline mb-4">
-                <input type="text" id="form3Example1q" class="form-control" />
-                <label class="form-label" for="form3Example1q">Name</label>
+                <input id="emailInput" type="text" id="form3Example1q" class="form-control" />
+                <label class="form-label" for="form3Example1q">Email</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input id="usernameInput" type="text" id="form3Example1q" class="form-control" />
+                <label class="form-label" for="form3Example1q">Username</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input id="passwordInput" type="text" id="form3Example1q" class="form-control" />
+                <label class="form-label" for="form3Example1q">Password</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input id="confirmPassword" type="text" id="form3Example1q" class="form-control" />
+                <label class="form-label" for="form3Example1q">Confirm Password</label>
               </div>
 
               <div class="row">
@@ -65,7 +77,7 @@ export default function Register(props){
                 </div>
               </div>
 
-              <button type="submit" style="background-color: #1FC58E" class="btn btn-lg mb-1">Submit</button>
+              <button id="registerButton" type="submit" style="background-color: #1FC58E" class="btn btn-lg mb-1">Submit</button>
 
             </form>
 
