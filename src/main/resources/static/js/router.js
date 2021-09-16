@@ -4,6 +4,7 @@ import registerEvent from "./views/Register.js"
 import Login, {loginEvents} from "./Views/Login.js"
 import Restaurants, {restaurantsEvents} from "./Views/Restaurants.js";
 import Recipes, {recipesEvents} from "./Views/Recipes.js";
+import Videos, {videoEvents} from "./Views/Videos.js";
 
 // import {searchClick} from "./Views/Home.js"
 /**
@@ -51,6 +52,14 @@ export default function router(URI) {
             uri: '/restaurants',
             title: 'Restaurants',
             viewEvent: restaurantsEvents
+        },
+
+        '/videos': {
+            returnView: Videos,
+            state: {},
+            url: '/videos',
+            title: 'Videos',
+            viewEvent: videoEvents
         }
 
     };
