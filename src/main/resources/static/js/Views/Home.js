@@ -310,8 +310,9 @@ function searchRecipes(q) {
         success: function (data) {
             console.log(data);
             // ingredientsCall(data)
-            embedFoodAnchors(data)
-            addSpoonPagination(q)
+            embedFoodAnchors(data);
+            addSpoonPagination(q);
+            scrollToAnchor();
         }
     })
 }
