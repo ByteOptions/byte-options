@@ -34,7 +34,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div id="info" class="container">
+            <div id="info" class="container d-none">
                 <div class="">
                     <div class="row">
                         <div class="col-md-8">
@@ -74,10 +74,11 @@ function searchClick() {
         let q = $("#inputMain").val()
         console.log(q);
         getLocations(q);
-        getVideos(q)
-        mapBox()
-        searchRecipes(q)
+        getVideos(q);
+        mapBox();
+        searchRecipes(q);
         scrollToAnchor();
+        hideDivs();
     })
 }
 
@@ -382,7 +383,7 @@ function ingredientsCall(result) {
         success: function (data) {
             console.log(data);
             $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br>${data.title}<br>
-            <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id='saverecipe'>Save Recipe</button>`)
+            <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id='saverecipe' class="btn btn-outline-dark">Save Recipe</button>`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
             })
@@ -409,4 +410,12 @@ function saveRecipe(result){
             console.log(response.status)
             createView("/")
         });
+
+
+}
+
+function hideDivs(result) {
+    if ($("#info").hasClass('d-none')) {
+        $("#info").toggleClass('d-none');
+    }
 }
