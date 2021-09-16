@@ -2,7 +2,7 @@ export default function Recipes() {
 
      return ` <div class="container">
                 <div class="row">
-                    <div class="col-md-11">
+                    <div class="col-md-11 recipefont">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                         incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor leo a diam.
                         Massa massa ultricies mi quis hendrerit dolor. Vulputate sapien nec sagittis

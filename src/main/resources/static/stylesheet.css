@@ -1,8 +1,13 @@
-
+body{
+    font-family: 'Mallanna', sans-serif;
+}
 html{
     background: #1FC58E;
 }
 
+.recipefont{
+    font-family: 'Mallanna', sans-serif;
+}
 
 
 .sun{
@@ -72,7 +77,7 @@ h5{
     line-height: 15px;
     padding: 12px;
     border-radius: 12px;
-    font-family: Georgia, serif;
+    font-family: 'Mallanna', sans-serif;
     font-weight: normal;
     text-decoration: none;
     font-style: normal;
@@ -97,7 +102,7 @@ h5{
     line-height: 15px;
     padding: 6px;
     border-radius: 12px;
-    font-family: Georgia, serif;
+    font-family: 'Mallanna', sans-serif;
     font-weight: normal;
     text-decoration: none;
     font-style: normal;
@@ -129,5 +134,5 @@ h5{
     box-shadow: 5px 5px 15px 5px #191414;
 }
 .nav-item{
-    colo: black;
+    color: black;
 }
