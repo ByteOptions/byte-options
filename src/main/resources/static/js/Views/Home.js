@@ -17,8 +17,8 @@ export default function Home() {
                 <br/>
                 <div class="row justify-content-center">
                     <div id="searchBox" class="col-12 col-md-10 col-lg-8">
-                        <form class="card card-sm">
-                            <div  class="card-body row no-gutters align-items-center">
+                        <form id="search-bar-form" class="card card-sm">
+                            <div id="search-bar-home" class="card-body row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <i class="fas fa-search h4 text-body"></i>
                                 </div>
@@ -27,7 +27,7 @@ export default function Home() {
                                            type="search" placeholder="Search topics or keywords">
                                 </div>
                                 <div class="col-auto">
-                                    <button id="submit" class="searchBtn" type="button">Search</button>
+                                    <button id="submit" class="btn btn-outline-dark" type="button">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -35,29 +35,29 @@ export default function Home() {
                 </div>
             </div>
             <div id="info" class="container">
-    <div class="">
-        <div class="row">
-        <div class="col-md-8">
-            <div id="recipe"></div>
-            <button id="prevspoon" class="d-none homeBtn">Previous</button>
-            <button id="morespoon" class="d-none homeBtn">More</button>
-            </div>
-            <div class="col-md-4">
-                <div id="big-box" class="d-flex justify-content-center flex-wrap">
-                    <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div> 
-                    <br>
-                    <button id="prevbtn" class="d-none homeBtn">Previous</button> 
-                    <button id="morebtn" class="d-none homeBtn" >More videos</button>
-                    <br>
-                    <div id="google_house"></div>
-                    <div class="m-3" id="map" style="width: 300px; height: 250px;"></div>
-                    <a id="Ainfo"></a>
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="recipe"></div>
+                            <button id="prevspoon" class="d-none btn btn-outline-dark">Previous</button>
+                            <button id="morespoon" class="d-none btn btn-outline-dark">More</button>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="big-box" class="d-flex justify-content-center flex-wrap">
+                                <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div>
+                                <br>
+                                <button id="prevbtn" class="d-none btn btn-outline-dark">Previous</button>
+                                <button id="morebtn" class="d-none btn btn-outline-dark">More videos</button>
+                                <br>
+                                <div id="google_house"></div>
+                                <div class="m-3" id="map" style="width: 300px; height: 250px;"></div>
+                                <a id="Ainfo"></a>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
          `
 }
 
@@ -148,7 +148,7 @@ function embedData(data) {
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen> 
-                 </iframe><button data-value="${video.snippet.title}" data-id="${video.id.videoId}" type="button" class="videoSave">Save Video</button>`)
+                 </iframe><button data-value="${video.snippet.title}" data-id="${video.id.videoId}" type="button" class="btn btn-outline-dark videoSave">Save Video</button>`)
 
     })
 
@@ -234,7 +234,7 @@ function createMarkers() {
                         <p class="restaurantName">${properties.title}</p> 
                         <br>
                           <p class="vicinity">${properties.description}</p> 
-                        <button type="button" class="restaurantSave">Save</button> 
+                        <button type="button" class="btn btn-outline-dark restaurantSave">Save</button> 
                         </form>`
                     )
             )
@@ -333,29 +333,23 @@ function nextSpoonCall(q, offset) {
 }
 
 function embedFoodAnchors(data){
-
     $("#recipe").html("");
     data.results.forEach(function(result){
         let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
         console.log(el);
-        $("#recipe").append(el);
-        $("#recipe").append("<br>")
+        $("#recipe").append(el).append("<br>");
         el.click(function(){
             clickFoodAnchor(result)
         })
-
-
     })
-
 }
+
 function clickFoodAnchor(result){
     ingredientsCall(result)
 }
 
 function addSpoonPagination(q){
-    $("#prevspoon").toggleClass('d-none');
-    $("#morespoon").toggleClass('d-none');
-    $("#prevspoon").click(function(){
+    $("#prevspoon").toggleClass('d-none').click(function(){
         if (offset !== 0){
             offset -= 10;
         } else{
@@ -364,7 +358,7 @@ function addSpoonPagination(q){
         console.log(offset)
         nextSpoonCall(q, offset);
     })
-    $("#morespoon").click(function(){
+    $("#morespoon").toggleClass('d-none').click(function(){
         offset += 10;
         nextSpoonCall(q, offset)
     })
@@ -373,7 +367,6 @@ function addSpoonPagination(q){
 function returnIngredients(data) {
     return data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
 }
-
 
 function ingredientsCall(result) {
     if ($("#prevspoon").hasClass('d-none')){
@@ -388,7 +381,7 @@ function ingredientsCall(result) {
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button class="homeBtn" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
+            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br>${data.title}<br> <ul>${returnIngredients(data)}</ul>${data.instructions}`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
             })
