@@ -41,7 +41,7 @@ export default function router(URI) {
 
         '/recipes': {
             returnView: Recipes,
-            state: {},
+            state: {recipes: '/api/recipes'},
             uri: '/recipes',
             title: 'Recipes',
             viewEvent: recipesEvents

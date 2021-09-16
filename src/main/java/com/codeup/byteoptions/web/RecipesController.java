@@ -3,6 +3,8 @@ package com.codeup.byteoptions.web;
 import com.codeup.byteoptions.data.recipes.Recipe;
 import com.codeup.byteoptions.data.recipes.RecipesRepository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 //import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,15 @@ public class RecipesController {
 
     public RecipesController(RecipesRepository recipesRepository) {
         this.recipesRepository = recipesRepository;
+    }
+
+    @GetMapping()
+    private List<Recipe> getRecipes(){
+        return recipesRepository.findAll();
+    }
+    @PostMapping()
+    private void addRecipe(@RequestBody Recipe newRecipe){
+        recipesRepository.save(newRecipe);
     }
 
     @PostMapping("{id}")
