@@ -2,8 +2,8 @@ body{
     font-family: 'Mallanna', sans-serif;
 }
 html{
-    background: #1FC58E;
-}
+    background: rgb(241,253,45);
+    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);}
 
 .recipefont{
     font-family: 'Mallanna', sans-serif;
@@ -27,12 +27,26 @@ h5{
 
 #background {
     width: 100%;
-    /*height: 800px;*/
-    background-image: url("/img/home-photo.jpg");
+    height: 800px;
+    background-image: url("/img/home-background.jpg");
 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+}
+#search-bar-form{
+    border-radius: 20px;
+}
+
+#search-bar-home{
+    background-color: #1FC58E;
+    border-radius: 25px;
+    border: 1px solid #191414;
+    webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
 }
 
 .videoBox {
@@ -42,11 +56,11 @@ h5{
 }
 
 #big-box {
-    border-radius: 25px;
+    /*border-radius: 25px;*/
     padding: 10px;
-    background-color: #1FC58E;
-    -webkit-box-shadow: 5px 5px 15px 5px #191414;
-    box-shadow: 5px 5px 15px 5px #191414;
+    /*background-color: #1FC58E;*/
+    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
 }
 
 #map {
@@ -63,13 +77,13 @@ h5{
 }
 
 #recipe {
-    background-color: #1FC58E;
+    /*background-color: #1FC58E;*/
     padding: 10px;
-
-    border-radius: 25px;
-    border: 2px #191414 SOLID;
-    -webkit-box-shadow: 5px 5px 15px 5px #191414;
-    box-shadow: 5px 5px 15px 5px #191414;
+    overflow: auto;
+    /*border-radius: 25px;*/
+    /*border: 2px #191414 SOLID;*/
+    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
 }
 .searchBtn{
     color: #191414;
@@ -123,8 +137,11 @@ h5{
     margin-top: 400px;
 }
 #info{
-    margin-top: 750px;
-    background-color: #DBD3D9;
+    background-color: #1FC58E;
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 5px 15px 5px #191414;
+    box-shadow: 5px 5px 15px 5px #191414;
+    margin-top: 250px;
 }
 
 /*navbar*/
