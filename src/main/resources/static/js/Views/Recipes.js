@@ -1,5 +1,5 @@
-export default function Recipes() {
-
+export default function Recipes(props) {
+     console.log(props);
      return ` <div class="container">
                 <div class="row">
                     <div class="col-md-11 recipefont">
