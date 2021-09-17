@@ -3,6 +3,7 @@ package com.codeup.byteoptions.web;
 
 import com.codeup.byteoptions.data.user.User;
 import com.codeup.byteoptions.data.user.UsersRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +14,11 @@ import java.util.List;
 public class UsersController {
 
     private final UsersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsersController(UsersRepository usersRepository) {
+    public UsersController(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -33,6 +36,7 @@ public class UsersController {
 
     @PostMapping
     private void createUser(@RequestBody User newUser){
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         usersRepository.save(newUser);
     }
 }
