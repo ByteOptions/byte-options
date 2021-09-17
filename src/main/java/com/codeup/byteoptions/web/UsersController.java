@@ -33,6 +33,7 @@ public class UsersController {
 
     @PostMapping
     private void createUser(@RequestBody User newUser){
+        newUser.getPreference().setUser(newUser);
         usersRepository.save(newUser);
     }
 }

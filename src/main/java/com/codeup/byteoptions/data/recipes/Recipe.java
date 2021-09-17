@@ -1,6 +1,8 @@
 package com.codeup.byteoptions.data.recipes;
 
-import com.codeup.byteoptions.data.user.User;
+import com.codeup.byteoptions.data.recipes.ingredients.Ingredients;
+import com.codeup.byteoptions.data.recipes.instructions.Instructions;
+import com.codeup.byteoptions.data.recipes.nutrition.Nutrition;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -13,15 +15,25 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long recipeID;
+    @Column
+    private String title;
 
-//    @ManyToOne
-//    @JsonIgnoreProperties({"password"})
-//    private User user;
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("recipe")
+    private Ingredients ingredients;
 
-    public Recipe(Long recipeID) {
-        this.recipeID = recipeID;
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("recipe")
+    private Instructions instructions;
+
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("recipe")
+    private Nutrition nutrition;
+
+
+
+    public Recipe(Long id) {
+        this.id = id;
     }
 
     public Recipe() {
@@ -35,11 +47,35 @@ public class Recipe {
         this.id = id;
     }
 
-    public Long getRecipeID() {
-        return recipeID;
+    public String getTitle() {
+        return title;
     }
 
-    public void setRecipeID(Long recipeID) {
-        this.recipeID = recipeID;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Ingredients getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Ingredients ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Instructions getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(Instructions instructions) {
+        this.instructions = instructions;
+    }
+
+    public Nutrition getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(Nutrition nutrition) {
+        this.nutrition = nutrition;
     }
 }

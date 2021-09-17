@@ -1,5 +1,6 @@
 package com.codeup.byteoptions.data.user;
 
+import com.codeup.byteoptions.data.preference.Preference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -23,20 +24,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
-
-    public User(Long id, String username, String email, String password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("users")
+    private Preference preference;
 
     public User(){
-    }
-
-    public User (String username){
-        this.username = username;
     }
 
     public Long getId() {
@@ -69,5 +61,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Preference getPreference() {
+        return preference;
+    }
+
+    public void setPreference(Preference preference) {
+        this.preference = preference;
     }
 }
