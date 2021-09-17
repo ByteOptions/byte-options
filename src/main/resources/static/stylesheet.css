@@ -78,14 +78,32 @@ h5{
 }
 
 #recipe {
-    /*background-color: #1FC58E;*/
     padding: 10px;
     overflow: auto;
-    /*border-radius: 25px;*/
-    /*border: 2px #191414 SOLID;*/
-    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
-    /*box-shadow: 5px 5px 15px 5px #191414;*/
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+#recipeTitle{
+    font-family: 'Pattaya', sans-serif;
+}
+
+#recipeLinks{
+    /*font-family: 'Pattaya', sans-serif;*/
+    color: black;
+    cursor: pointer;
+}
+
+#recipeLinks:hover{
+    color: blue;
+}
+
+#recipeTitleSmall{
+    font-weight: bold;
+}
+
 .searchBtn{
     color: #191414;
     font-size: 15px;

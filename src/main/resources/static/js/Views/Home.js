@@ -71,7 +71,7 @@ function scrollToAnchor(){
 
 function searchClick() {
     $("#submit").click(function () {
-        let q = $("#inputMain").val()
+        let q = $("#inputMain").val();
         console.log(q);
         getLocations(q);
         getVideos(q);
@@ -213,7 +213,7 @@ function mapBox() {
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-98.4936, 29.4241], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 12 // starting zoom
     });
 
 }
@@ -335,9 +335,9 @@ function nextSpoonCall(q, offset) {
 }
 
 function embedFoodAnchors(data){
-    $("#recipe").html("");
+    $("#recipe").html(`<h1 id="recipeTitle">Recipes</h1>`);
     data.results.forEach(function(result){
-        let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
+        let el = $(`<a id="recipeLinks" class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
         console.log(el);
         $("#recipe").append(el).append("<br>");
         el.click(function(){
@@ -383,7 +383,7 @@ function ingredientsCall(result) {
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br>${data.title}<br>
+            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br><div id="recipeTitleSmall" >${data.title}</div><br>
             <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id='saverecipe' class="btn btn-outline-dark">Save Recipe</button>`)
             $("#backbutton").click(function(){
                 nextSpoonCall(globalQ, offset)
