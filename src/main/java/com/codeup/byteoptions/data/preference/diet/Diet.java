@@ -1,7 +1,5 @@
 package com.codeup.byteoptions.data.preference.diet;
 
-import com.codeup.byteoptions.data.preference.Preference;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +12,7 @@ public class Diet {
 
     @Column
     private String name;
+
 
     public Diet(Long id, String name) {
         this.id = id;
@@ -37,4 +36,5 @@ public class Diet {
     public void setName(String name) {
         this.name = name;
     }
+
 }
