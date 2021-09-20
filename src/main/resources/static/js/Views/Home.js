@@ -47,10 +47,11 @@ export default function Home() {
                     <div class="row">
                         <div id="recipeContainer" class="col-md-8">
                             <div id="recipe">
-                                
                             </div>
-                            
-                        </div>
+                            <div id="buttonsContainer">
+                                <button id="prevspoon" class="d-none btn btn-outline-dark">Previous</button>
+                                <button id="morespoon" class="d-none btn btn-outline-dark">More</button></div>
+                            </div>
                         <div class="col-md-4">
                             <div id="big-box" class="d-flex justify-content-center flex-wrap">
                                 <div id="youtubeBox" class="d-flex justify-content-center flex-wrap"></div>
@@ -358,10 +359,8 @@ function nextSpoonCall(q, offset) {
 
 function embedFoodAnchors(data) {
     console.log(data)
-    $("#recipe").html(`<h1 id="recipeTitle">Recipes</h1><div id="containersContainer"></div><div style="margin-top: 15px"><button id="prevspoon" class="d-none btn btn-outline-dark">Previous</button>
-                                <button id="morespoon" class="d-none btn btn-outline-dark">More</button></div>`);
+    $("#recipe").html(`<h1 id="recipeTitle">Recipes</h1><div id="containersContainer"></div>`);
     data.results.forEach(function (result) {
-        // let tit = result.title.getSnippet(3);
         let el = $(`<div id="recipeContainers"><a id="recipeLinks" class="clickAnchor" data-id="${result.id}">${result.title}</a>
                 <img id="recipeImage" alt="${result.name}" src="${result.image}"></div>`)
         console.log(el);
@@ -397,22 +396,19 @@ function returnIngredients(data) {
 }
 
 function ingredientsCall(result) {
-    if ($("#prevspoon").hasClass('d-none')) {
-        $("#prevspoon").toggleClass('d-none');
-    }
-    if ($("#morespoon").hasClass('d-none')) {
-        $("#morespoon").toggleClass('d-none');
-    }
-
     $.ajax({
         method: "GET",
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
+            $("#prevspoon").toggleClass('d-none');
+            $("#morespoon").toggleClass('d-none');
             console.log(data);
             $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br><div id="recipeTitleSmall" >${data.title}</div><br>
             <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id="saverecipe" class="btn btn-outline-dark">Save Recipe</button>`)
             $("#backbutton").click(function () {
                 nextSpoonCall(globalQ, offset)
+                $("#prevspoon").toggleClass('d-none');
+                $("#morespoon").toggleClass('d-none');
             })
             $("#saverecipe").click(function () {
                 saveRecipe(data);

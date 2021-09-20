@@ -78,7 +78,7 @@ h5{
 }
 
 #recipe {
-    padding: 10px;
+    padding: 25px;
     overflow: auto;
     font-size: large;
     display: flex;
@@ -95,6 +95,10 @@ h5{
     color: black;
     cursor: pointer;
     font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 200px;
 }
 
 #recipeLinks:hover{
@@ -212,14 +216,20 @@ h5{
     height: 150px;
     box-shadow: 5px 5px 15px 5px #191414;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 #youtubeTitle{
     font-family: 'Pattaya', sans-serif;
 }
 
+#youtubeBox{
+    padding-top: 20px;
+}
+
 #mapTitle{
     font-family: 'Pattaya', sans-serif;
+    padding-top: 25px;
 }
 
 #recipeContainers{
@@ -239,6 +249,13 @@ h5{
 }
 
 #recipeContainer{
+    border-right-style: solid;
     /*background: rgb(241,253,45);*/
     /*background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);*/
+}
+
+#buttonsContainer{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
 }
