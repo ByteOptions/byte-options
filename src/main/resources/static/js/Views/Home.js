@@ -1,6 +1,14 @@
 import * as KEYS from "../keys.js";
 import createView from "../createView.js";
 
+// var KEYS;
+//
+// $.ajax("/key.js",
+//     {
+//         success: function(data){
+//             data
+//         }
+//     })
 
 var map;
 

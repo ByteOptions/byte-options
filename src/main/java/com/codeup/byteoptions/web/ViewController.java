@@ -18,15 +18,6 @@ public class ViewController {
     @Value("${SPOON_KEY}")
     private String spoonKey;
 
-    private final String keys = String.format("export function returnGoogleKey(){\n" +
-            "    return %s;\n" +
-            "}\n" +
-            "export function returnMapboxKey(){\n" +
-            "    return %s\n" +
-            "}\n" +
-            "export function returnSpoonKey(){\n" +
-            "    return %s\n" +
-            "}", googleKey, mapboxKey, spoonKey);
 
     @RequestMapping({"/", "/recipes", "/restaurants", "/login", "/home","/register","/account", "/users"})
     public String showValue() {
@@ -35,9 +26,18 @@ public class ViewController {
 
 
 //    for deployment
-@GetMapping(path = "/keys.js", produces = "application/javascript")
+@RequestMapping(path = "/js/keys.js", produces = "application/javascript")
+@ResponseBody
 public String apikey(){
-    return keys;
+    return String.format("export function returnGoogleKey(){\n" +
+            "    return `%s`;\n" +
+            "}\n" +
+            "export function returnMapboxKey(){\n" +
+            "    return `%s`\n" +
+            "}\n" +
+            "export function returnSpoonKey(){\n" +
+            "    return `%s`\n" +
+            "}", googleKey, mapboxKey, spoonKey);
 }
 
 }
