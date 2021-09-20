@@ -1,7 +1,6 @@
 import Home, {homeEvents} from "./Views/Home.js"
 import Register, {createRegisterEvents} from "./Views/Register.js"
-import registerEvent from "./views/Register.js"
-import Login, {loginEvents} from "./Views/Login.js"
+import Login from "./Views/Login.js"
 import Restaurants, {restaurantsEvents} from "./Views/Restaurants.js";
 import Recipes, {recipesEvents} from "./Views/Recipes.js";
 import User, {UserEvent} from "./Views/User.js";
