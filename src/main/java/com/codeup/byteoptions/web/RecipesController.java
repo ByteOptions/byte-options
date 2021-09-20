@@ -5,9 +5,6 @@ import com.codeup.byteoptions.data.recipes.RecipesRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/recipes", headers = "Accept=application/json", produces = "application/json")
@@ -23,8 +20,12 @@ public class RecipesController {
     private List<Recipe> getRecipes(){
         return recipesRepository.findAll();
     }
+
     @PostMapping()
     private void addRecipe(@RequestBody Recipe newRecipe){
+        newRecipe.getIngredients().setRecipe(newRecipe);
+        newRecipe.getInstructions().setRecipe(newRecipe);
+        newRecipe.getNutrition().setRecipe(newRecipe);
         recipesRepository.save(newRecipe);
     }
 
