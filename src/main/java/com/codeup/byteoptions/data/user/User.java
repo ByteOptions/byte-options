@@ -7,6 +7,9 @@ import com.codeup.byteoptions.data.restaurant.Restaurant;
 import com.codeup.byteoptions.data.video.Video;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.codeup.byteoptions.data.recipes.Recipe;
+import com.codeup.byteoptions.data.restaurant.Restaurant;
+import com.codeup.byteoptions.data.video.Video;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -30,6 +33,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Role role = Role.USER;
+    public enum Role {USER, ADMIN};
 
     @ManyToMany(
             fetch = FetchType.LAZY,
@@ -75,12 +82,9 @@ public class User {
     private Collection<Video>videos;
 
 
-
-
     public User(Long id, String username, String email, String password,
                 Collection<Restaurant> restaurants, Collection<Recipe> recipes,
                 Collection<Video> videos) {
-
         this.id = id;
         this.username = username;
         this.email = email;
@@ -91,6 +95,10 @@ public class User {
     }
 
     public User(){
+    }
+
+    public User (String username){
+        this.username = username;
     }
 
     public Long getId() {
@@ -125,7 +133,6 @@ public class User {
         this.password = password;
     }
 
-
     public Collection<Restaurant> getRestaurants() {
         return restaurants;
     }
@@ -148,6 +155,14 @@ public class User {
 
     public void setVideos(Collection<Video> videos) {
         this.videos = videos;
+    }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
+
