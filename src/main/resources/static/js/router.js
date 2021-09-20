@@ -61,7 +61,8 @@ export default function router(URI) {
             url: '/users',
             title:"Users",
             viewEvent : UserEvent
-        }
+        },
+
 
     };
 
