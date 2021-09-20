@@ -26,10 +26,10 @@ export default function Navbar() {
 
 
                     </ul>
-                    <form id="nav-form" class="d-flex">
-                        <input class="form-control me-2" id="inputMain" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-dark" id="submit" type="submit">Search</button>
-                    </form>
+<!--                    <form id="nav-form" class="d-flex">-->
+<!--                        <input class="form-control me-2" id="inputMain" type="search" placeholder="Search" aria-label="Search">-->
+<!--                        <button class="btn btn-outline-dark" id="submit" type="submit">Search</button>-->
+<!--                    </form>-->
                 </div>
             </div>
         </nav>`

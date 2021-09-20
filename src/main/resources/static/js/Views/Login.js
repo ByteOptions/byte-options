@@ -30,7 +30,7 @@ export default function Login(props) {
                     </div>
     
                     <div class="d-grid">
-                      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                      <button id="login-btn" class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
                       <div class="text-center">
                         <a class="small" href="#">Forgot password?</a>
                       </div>

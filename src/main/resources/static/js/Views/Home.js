@@ -37,10 +37,11 @@ export default function Home() {
             <div id="info" class="container d-none">
                 <div class="">
                     <div class="row">
-                        <div class="col-md-8">
-                            <div id="recipe"></div>
-                            <button id="prevspoon" class="d-none btn btn-outline-dark">Previous</button>
-                            <button id="morespoon" class="d-none btn btn-outline-dark">More</button>
+                        <div id="recipeContainer" class="col-md-8">
+                            <div id="recipe">
+                                
+                            </div>
+                            
                         </div>
                         <div class="col-md-4">
                             <div id="big-box" class="d-flex justify-content-center flex-wrap">
@@ -49,7 +50,9 @@ export default function Home() {
                                 <button id="prevbtn" class="d-none btn btn-outline-dark">Previous</button>
                                 <button id="morebtn" class="d-none btn btn-outline-dark">More videos</button>
                                 <br>
-                                <div id="google_house"></div>
+                                <div id="google_house">
+                                    <h1 id="mapTitle">Places Near You</h1>
+                                </div>
                                 <div class="m-3" id="map" style="width: 300px; height: 250px;"></div>
                                 <a id="Ainfo"></a>
 
@@ -61,17 +64,26 @@ export default function Home() {
          `
 }
 
+jQuery(document).on("keypress", 'form', function (e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 export function homeEvents() {
     searchClick();
 }
-function scrollToAnchor(){
+
+function scrollToAnchor() {
     var aTag = $("#Ainfo");
-    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+    $('html,body').animate({scrollTop: aTag.offset().top}, 'slow');
 }
 
 function searchClick() {
     $("#submit").click(function () {
-        let q = $("#inputMain").val()
+        let q = $("#inputMain").val();
         console.log(q);
         getLocations(q);
         getVideos(q);
@@ -114,6 +126,7 @@ function getVideos(q) {
         }
     });
 }
+
 function getNextVideo(q, pageToken) {
     $.ajax({
         method: 'GET',
@@ -141,7 +154,7 @@ function getNextVideo(q, pageToken) {
 
 
 function embedData(data) {
-    $("#youtubeBox").html("");
+    $("#youtubeBox").html(`<h1 id="youtubeTitle">Video Tutorials</h1>`);
     let dataArr = data.items
     dataArr.forEach(function (video) {
         $("#youtubeBox").append(`
@@ -157,38 +170,38 @@ function embedData(data) {
 
 }
 
-function setVideoSaveEvent(){
-   $(".videoSave").click(function (){
-      let videoid = ($(this).attr("data-id"));
-      let title = ($(this).attr("data-value"))
-       console.log(videoid);
-       console.log(title);
+function setVideoSaveEvent() {
+    $(".videoSave").click(function () {
+        let videoid = ($(this).attr("data-id"));
+        let title = ($(this).attr("data-value"))
+        console.log(videoid);
+        console.log(title);
 
-       let saveVideos={
-           "videoID": videoid,
-           "title": title
-       }
-       console.log(saveVideos)
-       console.log(JSON.stringify(saveVideos))
-       let request = {
-           method: "POST",
-           headers: {"Content-Type": "application/json"},
-           body: JSON.stringify(saveVideos)
-       };
+        let saveVideos = {
+            "videoID": videoid,
+            "title": title
+        }
+        console.log(saveVideos)
+        console.log(JSON.stringify(saveVideos))
+        let request = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(saveVideos)
+        };
 
-       fetch("http://localhost:8080/api/videos", request)
-           .then((response) => {
-               console.log(response.status)
-           });
-   })
+        fetch("http://localhost:8080/api/videos", request)
+            .then((response) => {
+                console.log(response.status)
+            });
+    })
 }
 
-function addYoutubePagination(q){
-    $("#morebtn").click(function(){
+function addYoutubePagination(q) {
+    $("#morebtn").click(function () {
         getNextVideo(q, nextPageToken);
 
     })
-    $("#prevbtn").click(function(){
+    $("#prevbtn").click(function () {
         getNextVideo(q, prevPageToken);
 
     })
@@ -213,7 +226,7 @@ function mapBox() {
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-98.4936, 29.4241], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 12 // starting zoom
     });
 
 }
@@ -244,16 +257,16 @@ function createMarkers() {
 
 }
 
-function setSaveEvent(){
+function setSaveEvent() {
 
-    $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function (){
+    $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function () {
         console.log($(this).siblings(".restaurantName").text())
         let restaurantName = $(this).siblings(".restaurantName").text()
         let vicinity = $(this).siblings(".vicinity").text()
 
         let savedRestaurants = {
             "name": restaurantName,
-            "vicinity" : vicinity
+            "vicinity": vicinity
         }
 
         console.log(savedRestaurants)
@@ -302,10 +315,10 @@ function searchRecipes(q) {
         method: "GET",
         url: `https://api.spoonacular.com/recipes/complexSearch`,
         data: {
-            apiKey : KEYS.returnSpoonKey(),
-            query : q,
+            apiKey: KEYS.returnSpoonKey(),
+            query: q,
             offset: 0,
-            number: 10,
+            number: 12,
         },
         success: function (data) {
             console.log(data);
@@ -316,15 +329,16 @@ function searchRecipes(q) {
         }
     })
 }
+
 function nextSpoonCall(q, offset) {
     $.ajax({
         method: "GET",
         url: `https://api.spoonacular.com/recipes/complexSearch`,
         data: {
-            apiKey : KEYS.returnSpoonKey(),
-            query : q,
+            apiKey: KEYS.returnSpoonKey(),
+            query: q,
             offset: offset,
-            number: 10,
+            number: 12,
         },
         success: function (data) {
             console.log(data);
@@ -334,33 +348,37 @@ function nextSpoonCall(q, offset) {
     })
 }
 
-function embedFoodAnchors(data){
-    $("#recipe").html("");
-    data.results.forEach(function(result){
-        let el = $(`<a class='clickAnchor' data-id='${result.id}'>${result.title}</a>`)
+function embedFoodAnchors(data) {
+    console.log(data)
+    $("#recipe").html(`<h1 id="recipeTitle">Recipes</h1><div id="containersContainer"></div><div style="margin-top: 15px"><button id="prevspoon" class="d-none btn btn-outline-dark">Previous</button>
+                                <button id="morespoon" class="d-none btn btn-outline-dark">More</button></div>`);
+    data.results.forEach(function (result) {
+        // let tit = result.title.getSnippet(3);
+        let el = $(`<div id="recipeContainers"><a id="recipeLinks" class="clickAnchor" data-id="${result.id}">${result.title}</a>
+                <img id="recipeImage" alt="${result.name}" src="${result.image}"></div>`)
         console.log(el);
-        $("#recipe").append(el).append("<br>");
-        el.click(function(){
+        $("#containersContainer").append(el).append("<br>");
+        el.click(function () {
             clickFoodAnchor(result)
         })
     })
 }
 
-function clickFoodAnchor(result){
+function clickFoodAnchor(result) {
     ingredientsCall(result)
 }
 
-function addSpoonPagination(q){
-    $("#prevspoon").toggleClass('d-none').click(function(){
-        if (offset !== 0){
+function addSpoonPagination(q) {
+    $("#prevspoon").toggleClass('d-none').click(function () {
+        if (offset !== 0) {
             offset -= 10;
-        } else{
+        } else {
             return;
         }
         console.log(offset)
         nextSpoonCall(q, offset);
     })
-    $("#morespoon").toggleClass('d-none').click(function(){
+    $("#morespoon").toggleClass('d-none').click(function () {
         offset += 10;
         nextSpoonCall(q, offset)
     })
@@ -371,7 +389,7 @@ function returnIngredients(data) {
 }
 
 function ingredientsCall(result) {
-    if ($("#prevspoon").hasClass('d-none')){
+    if ($("#prevspoon").hasClass('d-none')) {
         $("#prevspoon").toggleClass('d-none');
     }
     if ($("#morespoon").hasClass('d-none')) {
@@ -383,12 +401,12 @@ function ingredientsCall(result) {
         url: `https://api.spoonacular.com/recipes/${result.id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
         success: function (data) {
             console.log(data);
-            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br>${data.title}<br>
-            <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id='saverecipe' class="btn btn-outline-dark">Save Recipe</button>`)
-            $("#backbutton").click(function(){
+            $("#recipe").html(`<button class=" btn btn-outline-dark" id="backbutton">Back</button> <br><div id="recipeTitleSmall" >${data.title}</div><br>
+            <ul>${returnIngredients(data)}</ul>${data.instructions}<br><button id="saverecipe" class="btn btn-outline-dark">Save Recipe</button>`)
+            $("#backbutton").click(function () {
                 nextSpoonCall(globalQ, offset)
             })
-            $("#saverecipe").click(function (){
+            $("#saverecipe").click(function () {
                 saveRecipe(data);
             })
         }
@@ -396,7 +414,7 @@ function ingredientsCall(result) {
 }
 
 // Function to create join table between user and recipe ID
-function saveRecipe(result){
+function saveRecipe(result) {
     console.log(result.id)
     let recipeID = result.id
 

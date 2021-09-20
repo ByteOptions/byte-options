@@ -5,6 +5,7 @@ import Login, {loginEvents} from "./Views/Login.js"
 import Restaurants, {restaurantsEvents} from "./Views/Restaurants.js";
 import Recipes, {recipesEvents} from "./Views/Recipes.js";
 import User, {UserEvent} from "./Views/User.js";
+import LoginEvent from "./auth.js";
 
 
 // import {searchClick} from "./Views/Home.js"
@@ -36,7 +37,7 @@ export default function router(URI) {
             state: {},
             uri: '/login',
             title: 'Login',
-            viewEvent: loginEvents
+            viewEvent: LoginEvent
         },
 
         '/recipes': {

@@ -78,14 +78,33 @@ h5{
 }
 
 #recipe {
-    /*background-color: #1FC58E;*/
     padding: 10px;
     overflow: auto;
-    /*border-radius: 25px;*/
-    /*border: 2px #191414 SOLID;*/
-    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
-    /*box-shadow: 5px 5px 15px 5px #191414;*/
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+#recipeTitle{
+    font-family: 'Pattaya', sans-serif;
+}
+
+#recipeLinks{
+    /*font-family: 'Pattaya', sans-serif;*/
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#recipeLinks:hover{
+    color: blue;
+}
+
+#recipeTitleSmall{
+    font-weight: bold;
+}
+
 .searchBtn{
     color: #191414;
     font-size: 15px;
@@ -187,4 +206,39 @@ h5{
     background: linear-gradient(
             0deg
             , rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
+}
+
+#recipeImage{
+    height: 150px;
+    box-shadow: 5px 5px 15px 5px #191414;
+    margin-top: 5px;
+}
+
+#youtubeTitle{
+    font-family: 'Pattaya', sans-serif;
+}
+
+#mapTitle{
+    font-family: 'Pattaya', sans-serif;
+}
+
+#recipeContainers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    max-width: 205px;
+}
+
+#containersContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#recipeContainer{
+    /*background: rgb(241,253,45);*/
+    /*background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);*/
 }

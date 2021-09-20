@@ -6,6 +6,7 @@ import com.codeup.byteoptions.data.recipes.Recipe;
 import com.codeup.byteoptions.data.restaurant.Restaurant;
 import com.codeup.byteoptions.data.video.Video;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -28,6 +29,7 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
 
     @ManyToMany(
             fetch = FetchType.LAZY,
@@ -78,6 +80,7 @@ public class User {
     public User(Long id, String username, String email, String password,
                 Collection<Restaurant> restaurants, Collection<Recipe> recipes,
                 Collection<Video> videos) {
+
         this.id = id;
         this.username = username;
         this.email = email;
@@ -122,6 +125,7 @@ public class User {
         this.password = password;
     }
 
+
     public Collection<Restaurant> getRestaurants() {
         return restaurants;
     }
@@ -144,5 +148,6 @@ public class User {
 
     public void setVideos(Collection<Video> videos) {
         this.videos = videos;
+
     }
 }
