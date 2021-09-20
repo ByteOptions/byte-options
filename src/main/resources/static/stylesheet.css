@@ -199,8 +199,11 @@ h5{
     padding: 50px;
 }
 #login-inner {
-    background: white;
+    filter: drop-shadow(2px 4px 6px black);
+    background-color: rgba(152, 151, 151, 0.1);
+    box-shadow: inset 0 0 0 0px rgba(255, 255, 255, 0.1);
 }
+
 #app{
     background: rgb(241,253,45);
     background: linear-gradient(
