@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ViewController {
 
-//    @Value("${MAPBOX_KEY}")
-//    private String mapboxKey;
-//
-//    @Value("${GOOGLE_KEY}")
-//    private String googleKey;
-//
-//    @Value("${SPOON_KEY}")
-//    private String spoonKey;
+    @Value("${MAPBOX_KEY}")
+    private String mapboxKey;
 
-//    private final String keys = String.format("export function returnGoogleKey(){\n" +
-//            "    return %s;\n" +
-//            "}\n" +
-//            "export function returnMapboxKey(){\n" +
-//            "    return %s\n" +
-//            "}\n" +
-//            "export function returnSpoonKey(){\n" +
-//            "    return %s\n" +
-//            "}", googleKey, mapboxKey, spoonKey);
+    @Value("${GOOGLE_KEY}")
+    private String googleKey;
+
+    @Value("${SPOON_KEY}")
+    private String spoonKey;
+
+    private final String keys = String.format("export function returnGoogleKey(){\n" +
+            "    return %s;\n" +
+            "}\n" +
+            "export function returnMapboxKey(){\n" +
+            "    return %s\n" +
+            "}\n" +
+            "export function returnSpoonKey(){\n" +
+            "    return %s\n" +
+            "}", googleKey, mapboxKey, spoonKey);
 
     @RequestMapping({"/", "/recipes", "/restaurants", "/login", "/home","/register","/account", "/users"})
     public String showValue() {
@@ -35,9 +35,9 @@ public class ViewController {
 
 
 //    for deployment
-//@GetMapping(path = "/keys.js", produces = "application/javascript")
-//public String apikey(){
-//    return keys;
-//}
+@GetMapping(path = "/keys.js", produces = "application/javascript")
+public String apikey(){
+    return keys;
+}
 
 }
