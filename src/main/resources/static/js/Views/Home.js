@@ -416,11 +416,22 @@ function ingredientsCall(result) {
         }
     })
 }
+function getSaveRecipeComponents(id){
+    let instructions, ingredients, nutrition, title;
+
+    $.ajax({
+        url: `https://api.spoonacular.com/recipes/${id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
+        success: function(data){
+        }
+    })
+
+}
 
 // Function to create join table between user and recipe ID
 function saveRecipe(result) {
     console.log(result.id)
     let recipeID = result.id
+
 
     let request = {
         method: "POST",
@@ -428,7 +439,7 @@ function saveRecipe(result) {
         body: JSON.stringify(recipeID)
     };
     console.log(recipeID, request)
-    fetch(`http://localhost:8080/api/recipes/${recipeID}`, request)
+    fetch(`http://localhost:8080/api/recipes/`, request)
         .then((response) => {
             console.log(response.status)
             createView("/")

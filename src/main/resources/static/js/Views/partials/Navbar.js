@@ -1,10 +1,13 @@
 export default function Navbar() {
     return `<nav class="navbar navbar-expand-lg navbar-light p-0">
             <div class="container-fluid" id="nav-container">
-                <a class="navbar-brand" data-link href="/">
+                <a class="navbar-brand nav-link" data-link href="/">
                     <img src="/img/16316362702731.png" alt="" width="auto" height="65"
                          class="d-inline-block align-text-top">
                 </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -12,6 +15,10 @@ export default function Navbar() {
 <!--                            <a class="nav-link" aria-current="page" href="/" data-link>Search</a>-->
 <!--                        </li>-->
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="/" data-link>Home</a>
+                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/restaurants" data-link>Restaurants</a>
                         </li>
