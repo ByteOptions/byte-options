@@ -29,6 +29,12 @@ export default function Navbar() {
                         <li class="nav-item">
                             <a class="nav-link" href="/me" data-link>Account</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login" data-link>Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register" data-link>Register</a>
+                        </li>
 
 
 
