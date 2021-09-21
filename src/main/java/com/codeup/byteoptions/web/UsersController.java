@@ -28,11 +28,11 @@ public class UsersController {
         return usersRepository.findAll();
     }
 
-    //    @GetMapping("/findByEmail")
-    //    private User getUserByEmail(@RequestParam String email){
-    //        System.out.println(email);
-    //        return usersRepository.findByEmail(email).get();
-    //    }
+        @GetMapping("/findByEmail")
+        private User getUserByEmail(@RequestParam String email){
+            System.out.println(email);
+            return usersRepository.findByEmail(email).get();
+        }
 
     @PostMapping
     private void createUser(@RequestBody User newUser){

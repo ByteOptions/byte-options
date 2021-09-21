@@ -1,12 +1,5 @@
 package com.codeup.byteoptions.data.user;
 
-import com.codeup.byteoptions.data.preference.Preference;
-import com.codeup.byteoptions.data.intolerance.Intolerance;
-import com.codeup.byteoptions.data.recipes.Recipe;
-import com.codeup.byteoptions.data.restaurant.Restaurant;
-import com.codeup.byteoptions.data.video.Video;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.codeup.byteoptions.data.recipes.Recipe;
 import com.codeup.byteoptions.data.restaurant.Restaurant;
 import com.codeup.byteoptions.data.video.Video;

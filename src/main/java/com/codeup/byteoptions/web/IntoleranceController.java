@@ -2,10 +2,7 @@ package com.codeup.byteoptions.web;
 
 import com.codeup.byteoptions.data.intolerance.Intolerance;
 import com.codeup.byteoptions.data.intolerance.IntoleranceRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
