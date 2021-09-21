@@ -4,6 +4,7 @@ package com.codeup.byteoptions.web;
 import com.codeup.byteoptions.data.user.User;
 import com.codeup.byteoptions.data.user.UsersRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,13 @@ public class UsersController {
 
 
 
+    @GetMapping("/me")
+    private User getThisUser(OAuth2Authentication auth){
+        String email = auth.getName();
+        User user = usersRepository.findByEmail(email).get();
+        return user;
+
+    }
     @GetMapping
     private List<User> getUsers(){
         return usersRepository.findAll();

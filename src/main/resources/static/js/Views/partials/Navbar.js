@@ -27,7 +27,7 @@ export default function Navbar() {
                             <a class="nav-link" href="/recipes" data-link>Recipes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/me" data-link>Account</a>
+                            <a class="nav-link" href="/user" data-link>Account</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/login" data-link>Login</a>
