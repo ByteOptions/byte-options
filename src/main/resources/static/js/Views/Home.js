@@ -1,6 +1,10 @@
 import * as KEYS from "../keys.js";
 import createView from "../createView.js";
 
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 // var KEYS;
 //
 // $.ajax("/key.js",
@@ -361,7 +365,8 @@ function embedFoodAnchors(data) {
     console.log(data)
     $("#recipe").html(`<h1 id="recipeTitle">Recipes</h1><div id="containersContainer"></div>`);
     data.results.forEach(function (result) {
-        let el = $(`<div id="recipeContainers"><a id="recipeLinks" class="clickAnchor" data-id="${result.id}">${result.title}</a>
+        let el = $(`<div id="recipeContainers"><a id="recipeLinks" class="clickAnchor" data-id="${result.id}"
+        data-bs-toggle="tooltip" data-bs-html="true" title="${result.title}">${result.title}</a>
                 <img id="recipeImage" alt="${result.name}" src="${result.image}"></div>`)
         console.log(el);
         $("#containersContainer").append(el).append("<br>");
