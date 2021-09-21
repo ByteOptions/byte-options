@@ -21,13 +21,19 @@ export default function createView(URI) {
     // change view to loading screen
     // render(null, router('/loading'));
 
-    let request = {
-        headers: getHeaders()
-    }
+        let request = {
+            headers: getHeaders()
+        }
 
-    fetchData(route.state, request).then((props) => {
-        render(props, route);
-    });
+       try {
+        fetchData(route.state, request).then((props) => {
+               render(props, route);
+           })
+       } catch(e){
+        createView("/needRegister")
+       }
+
+
 }
 
 

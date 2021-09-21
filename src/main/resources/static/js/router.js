@@ -5,6 +5,7 @@ import Restaurants, {restaurantsEvents} from "./Views/Restaurants.js";
 import Recipes, {recipesEvents} from "./Views/Recipes.js";
 import User, {UserEvent} from "./Views/User.js";
 import LoginEvent from "./auth.js";
+import NeedRegister from "./Views/NeedRegister.js";
 
 
 // import {searchClick} from "./Views/Home.js"
@@ -55,13 +56,19 @@ export default function router(URI) {
             viewEvent: restaurantsEvents
         },
 
-        '/users': {
+        '/user': {
             returnView: User,
-            state: {users:"/api/users"},
-            url: '/users',
+            state: {user:"/api/users/me"},
+            url: '/user',
             title:"Users",
             viewEvent : UserEvent
         },
+        '/needRegister' : {
+            returnView: NeedRegister,
+            state: {},
+            uri: location.pathname,
+            title: 'Register!'
+        }
 
 
     };
