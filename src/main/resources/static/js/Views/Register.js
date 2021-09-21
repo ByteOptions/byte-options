@@ -2,7 +2,7 @@ import createView from "../createView.js";
 
 export default function Register(props){
     return `
-<section  class="h-100 h-custom" style="background-color: #1FC58E; height: 1000px;">
+<section  class="h-100 h-custom" style="">
   <div class="container py-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-8 col-xl-6">
