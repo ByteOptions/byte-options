@@ -1,5 +1,6 @@
 import * as KEYS from "../keys.js";
 import createView from "../createView.js";
+import {getHeaders} from "../auth.js";
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -198,7 +199,7 @@ function setVideoSaveEvent() {
         console.log(JSON.stringify(saveVideos))
         let request = {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: getHeaders(),
             body: JSON.stringify(saveVideos)
         };
 
@@ -286,7 +287,7 @@ function setSaveEvent() {
 
         let request = {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: getHeaders(),
             body: JSON.stringify(savedRestaurants)
         };
 

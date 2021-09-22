@@ -44,8 +44,8 @@ public class User {
             targetEntity = Restaurant.class)
     @JoinTable(
             name="user_restaurants",
-            joinColumns = {@JoinColumn(name = "restaurant_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name="user_id", nullable = false, updatable = false)},
+            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="restaurant_id", nullable = false, updatable = false)},
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
@@ -131,6 +131,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addRestaurants(Restaurant restaurant){
+        restaurants.add(restaurant);
     }
 
     public Collection<Restaurant> getRestaurants() {
