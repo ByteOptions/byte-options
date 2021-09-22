@@ -293,7 +293,7 @@ function setSaveEvent() {
         fetch("http://localhost:8080/api/restaurants", request)
             .then((response) => {
                 console.log(response.status)
-                createView("/");
+                alert("Video was saved")
             });
     })
 }
