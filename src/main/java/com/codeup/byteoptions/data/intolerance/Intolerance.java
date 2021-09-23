@@ -1,11 +1,7 @@
 package com.codeup.byteoptions.data.intolerance;
 
-
-import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
-
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.security.PrivateKey;
+
 
 @Entity
 @Table(name="intolerance")

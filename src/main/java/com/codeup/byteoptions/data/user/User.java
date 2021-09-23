@@ -59,8 +59,8 @@ public class User {
             targetEntity = Recipe.class)
     @JoinTable(
             name="user_recipe",
-            joinColumns = {@JoinColumn(name = "recipe_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name="user_id", nullable = false, updatable = false)},
+            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="recipe_id", nullable = false, updatable = false)},
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
@@ -73,13 +73,13 @@ public class User {
             targetEntity = Video.class)
     @JoinTable(
             name="user_videos",
-            joinColumns = {@JoinColumn(name = "video_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name="user_id", nullable = false, updatable = false)},
+            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="video_id", nullable = false, updatable = false)},
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
 
-    private Collection<Video>videos;
+                private Collection<Video>videos;
 
 
     public User(Long id, String username, String email, String password,
@@ -159,6 +159,10 @@ public class User {
 
     public void setVideos(Collection<Video> videos) {
         this.videos = videos;
+    }
+
+    public void addVideo(Video video){
+        videos.add(video);
     }
 
     public Role getRole() {
