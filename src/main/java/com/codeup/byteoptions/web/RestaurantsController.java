@@ -5,12 +5,7 @@ import com.codeup.byteoptions.data.restaurant.RestaurantsRepository;
 import com.codeup.byteoptions.data.user.User;
 import com.codeup.byteoptions.data.user.UsersRepository;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.oauth2.provider.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value="/api/restaurants", headers = "Accept=application/json", produces = "application/json")
