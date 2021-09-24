@@ -153,6 +153,10 @@ public class User {
         this.recipes = recipes;
     }
 
+    public void addRecipe(Recipe recipe){
+        recipes.add(recipe);
+    }
+
     public Collection<Video> getVideos() {
         return videos;
     }

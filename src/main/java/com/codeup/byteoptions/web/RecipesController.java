@@ -2,6 +2,9 @@ package com.codeup.byteoptions.web;
 
 import com.codeup.byteoptions.data.recipes.Recipe;
 import com.codeup.byteoptions.data.recipes.RecipesRepository;
+import com.codeup.byteoptions.data.user.User;
+import com.codeup.byteoptions.data.user.UsersRepository;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +14,11 @@ import java.util.List;
 public class RecipesController {
 
     private final RecipesRepository recipesRepository;
+    private final UsersRepository usersRepository;
 
-    public RecipesController(RecipesRepository recipesRepository) {
+    public RecipesController(RecipesRepository recipesRepository, UsersRepository usersRepository) {
         this.recipesRepository = recipesRepository;
+        this.usersRepository = usersRepository;
     }
 
     @GetMapping()
@@ -22,10 +27,17 @@ public class RecipesController {
     }
 
     @PostMapping()
-    private void addRecipe(@RequestBody Recipe newRecipe){
+    private void addRecipe(@RequestBody Recipe newRecipe, OAuth2Authentication auth){
+
+
         newRecipe.getIngredients().setRecipe(newRecipe);
         newRecipe.getInstructions().setRecipe(newRecipe);
         newRecipe.getNutrition().setRecipe(newRecipe);
+
+        String email = auth.getName();
+        User user = usersRepository.findByEmail(email).get();
+        user.addRecipe(newRecipe);
+
         recipesRepository.save(newRecipe);
     }
 
