@@ -19,6 +19,7 @@ public class Recipe {
     @Column
     private String title;
 
+
     @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("recipe")
     private Ingredients ingredients;
