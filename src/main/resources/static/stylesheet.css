@@ -43,17 +43,19 @@ h5{
 }
 
 #search-bar-home{
-    background-color: #1FC58E;
+    /*background-color: #1FC58E;*/
+    background: rgb(241,253,45);
+    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
     border-radius: 25px;
     border: 1px solid #191414;
-    webkit-box-shadow: 5px 5px 15px 5px #191414;
-    box-shadow: 5px 5px 15px 5px #191414;
+    /*webkit-box-shadow: 5px 5px 15px 5px #191414;*/
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
 }
 
 .videoBox {
     border-radius: 25px;
-    -webkit-box-shadow: 5px 5px 15px 5px #191414;
-    box-shadow: 5px 5px 15px 5px #191414;
+    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
 }
 
 #big-box {
@@ -65,9 +67,9 @@ h5{
 }
 
 #map {
-    border-radius: 25px;
-    -webkit-box-shadow: 5px 5px 15px 5px #191414;
-    box-shadow: 5px 5px 15px 5px #191414;
+    border-radius: 50px;
+    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
 }
 
 .h-100 h-custom{
@@ -169,7 +171,9 @@ h5{
     margin-top: 400px;
 }
 #info{
-    background-color: #1FC58E;
+    /*background-color: #1FC58E;*/
+    background: rgb(241,253,45);
+    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
     border-radius: 20px;
     -webkit-box-shadow: 5px 5px 15px 5px #191414;
     box-shadow: 5px 5px 15px 5px #191414;
@@ -178,9 +182,11 @@ h5{
 
 /*navbar*/
 #nav-container {
-    background: #1FC58E;
-    -webkit-box-shadow: 5px 5px 15px 5px #191414;
-    box-shadow: 5px 5px 15px 5px #191414;
+    /*background: #1FC58E;*/
+    /*-webkit-box-shadow: 5px 5px 15px 5px #191414;*/
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
+    background: rgb(241,253,45);
+    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
 }
 .nav-item{
     color: black;
@@ -225,7 +231,7 @@ h5{
 
 #recipeImage{
     height: 150px;
-    box-shadow: 5px 5px 15px 5px #191414;
+    /*box-shadow: 5px 5px 15px 5px #191414;*/
     margin-top: 5px;
     cursor: pointer;
 }
