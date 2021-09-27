@@ -37,6 +37,7 @@ export default function Navbar() {
                         <li class="nav-item">
                             <a class="nav-link" href="/register" data-link>Register</a>
                         </li>
+                       
 
 
 

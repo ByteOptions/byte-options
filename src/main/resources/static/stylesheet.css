@@ -1,9 +1,17 @@
 body{
     font-family: 'Mallanna', sans-serif;
+    background: rgb(241,253,45);
+    background: linear-gradient(
+            0deg
+            , rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
 }
 html{
+    /*background: rgb(241,253,45);*/
+    /*background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);*/
     background: rgb(241,253,45);
-    background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
+    background: linear-gradient(
+            0deg
+            , rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
 }
 
 .recipefont{
@@ -217,10 +225,10 @@ h5{
 }
 
 #app{
-    background: rgb(241,253,45);
-    background: linear-gradient(
-            0deg
-            , rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);
+    /*background: rgb(241,253,45);*/
+    /*background: linear-gradient(*/
+    /*        0deg*/
+    /*        , rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);*/
 }
 
 #recipeImage{
