@@ -22,11 +22,11 @@ export default function Register(props){
                 <label class="form-label" for="form3Example1q">Username</label>
               </div>
               <div class="form-outline mb-4">
-                <input id="passwordInput" type="text" id="form3Example1q" class="form-control" />
+                <input id="passwordInput" type="password" id="form3Example1q" class="form-control" />
                 <label class="form-label" for="form3Example1q">Password</label>
               </div>
               <div class="form-outline mb-4">
-                <input id="confirmPassword" type="text" id="form3Example1q" class="form-control" />
+                <input id="confirmPassword" type="password" id="form3Example1q" class="form-control" />
                 <label class="form-label" for="form3Example1q">Confirm Password</label>
               </div>
 
@@ -66,18 +66,7 @@ export default function Register(props){
 
               </div>
 
-              <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
-                <div class="col-md-6">
-
-                  <div class="form-outline">
-                    <input type="text" id="form3Example1w" class="form-control" />
-                    <label class="form-label" for="form3Example1w">Registration code</label>
-                  </div>
-
-                </div>
-              </div>
-
-              <button id="registerButton" type="submit" style="background-color: #1FC58E" class="btn btn-lg mb-1">Submit</button>
+              <button id="registerButton" type="submit" style="background-color: transparent; border: 1px solid transparent; border-color: #212529" class="btn btn-lg mb-1">Sign Up</button>
 
             </form>
 
@@ -92,6 +81,7 @@ export default function Register(props){
 
 export function createRegisterEvents(){
     registerEvent()
+
 }
 
 function registerEvent(){
@@ -116,5 +106,4 @@ function registerEvent(){
                 createView("/")
             });
     })
-
 }

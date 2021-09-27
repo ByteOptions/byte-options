@@ -6,6 +6,7 @@ import Recipes, {recipesEvents} from "./Views/Recipes.js";
 import User, {UserEvent} from "./Views/User.js";
 import LoginEvent from "./auth.js";
 import NeedRegister from "./Views/NeedRegister.js";
+import Creators, {creatorsEvent} from "./Views/Creators.js"
 
 
 // import {searchClick} from "./Views/Home.js"
@@ -68,6 +69,13 @@ export default function router(URI) {
             state: {},
             uri: location.pathname,
             title: 'Register!'
+        },
+        '/creators': {
+            returnView: Creators,
+            state:{},
+            uri: '/creators',
+            title: 'Creators',
+            viewEvent: creatorsEvent
         }
 
 

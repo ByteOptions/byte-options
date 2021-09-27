@@ -19,7 +19,7 @@ public class ViewController {
     private String spoonKey;
 
 
-    @RequestMapping({"/", "/recipes", "/restaurants", "/login", "/home","/register","/account", "/users"})
+    @RequestMapping({"/", "/recipes", "/restaurants", "/login", "/home","/register","/account", "/users", "/creators"})
     public String showValue() {
         return "forward:/index.html";
     }
