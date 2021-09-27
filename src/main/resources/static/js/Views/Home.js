@@ -259,7 +259,7 @@ function createMarkers() {
                 new mapboxgl.Popup({offset: 10}) // add popups
                     .setHTML(
                         `<form class="popup-form"> 
-                        <p class="restaurantName">${properties.title}</p> 
+                        <p data-id="${properties.placeId}" class="restaurantName">${properties.title}</p> 
                         <br>
                           <p class="vicinity">${properties.description}</p> 
                         <button type="button" class="btn btn-outline-dark restaurantSave">Save</button> 
@@ -276,11 +276,13 @@ function setSaveEvent() {
     $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function () {
         console.log($(this).siblings(".restaurantName").text())
         let restaurantName = $(this).siblings(".restaurantName").text()
+        let placeId = $(this).siblings(".restaurantName").attr('data-id');
         let vicinity = $(this).siblings(".vicinity").text()
 
         let savedRestaurants = {
             "name": restaurantName,
-            "vicinity": vicinity
+            "vicinity": vicinity,
+            "placeId": placeId
         }
 
         console.log(savedRestaurants)
@@ -307,7 +309,7 @@ function combLocation(data) {
         geojson.features.unshift({
             type: 'Feature',
             geometry: {type: 'Point', coordinates: [lng, lat]},
-            properties: {title: `${result.name}`, description: `${result.vicinity}`}
+            properties: {title: `${result.name}`, description: `${result.vicinity}`, placeId:`${result.place_id}`}
         })
 
 
@@ -422,16 +424,7 @@ function ingredientsCall(result) {
         }
     })
 }
-function getSaveRecipeComponents(id){
-    let instructions, ingredients, nutrition, title;
 
-    $.ajax({
-        url: `https://api.spoonacular.com/recipes/${id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
-        success: function(data){
-        }
-    })
-
-}
 
 // Function to create join table between user and recipe ID
 function saveRecipe(result) {
@@ -462,7 +455,7 @@ function saveRecipe(result) {
         .then((response) => {
             console.log(response.status)
             if (response.ok){
-                alert("Restaurant was saved")
+                alert("Recipe was saved")
             }
 
 
