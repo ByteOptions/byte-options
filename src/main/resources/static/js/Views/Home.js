@@ -203,7 +203,7 @@ function setVideoSaveEvent() {
             body: JSON.stringify(saveVideos)
         };
 
-        fetch("http://localhost:8080/api/videos", request)
+        fetch("/api/videos", request)
             .then((response) => {
                 console.log(response.status)
             });
@@ -259,7 +259,7 @@ function createMarkers() {
                 new mapboxgl.Popup({offset: 10}) // add popups
                     .setHTML(
                         `<form class="popup-form"> 
-                        <p class="restaurantName">${properties.title}</p> 
+                        <p data-id="${properties.placeId}" class="restaurantName">${properties.title}</p> 
                         <br>
                           <p class="vicinity">${properties.description}</p> 
                         <button type="button" class="btn btn-outline-dark restaurantSave">Save</button> 
@@ -276,11 +276,13 @@ function setSaveEvent() {
     $('#map').on("click", ".mapboxgl-popup .mapboxgl-popup-content .popup-form .restaurantSave", function () {
         console.log($(this).siblings(".restaurantName").text())
         let restaurantName = $(this).siblings(".restaurantName").text()
+        let placeId = $(this).siblings(".restaurantName").attr('data-id');
         let vicinity = $(this).siblings(".vicinity").text()
 
         let savedRestaurants = {
             "name": restaurantName,
-            "vicinity": vicinity
+            "vicinity": vicinity,
+            "placeId": placeId
         }
 
         console.log(savedRestaurants)
@@ -291,10 +293,10 @@ function setSaveEvent() {
             body: JSON.stringify(savedRestaurants)
         };
 
-        fetch("http://localhost:8080/api/restaurants", request)
+        fetch("/api/restaurants", request)
             .then((response) => {
                 console.log(response.status)
-                alert("Video was saved")
+                alert("Restaurant was saved")
             });
     })
 }
@@ -307,7 +309,7 @@ function combLocation(data) {
         geojson.features.unshift({
             type: 'Feature',
             geometry: {type: 'Point', coordinates: [lng, lat]},
-            properties: {title: `${result.name}`, description: `${result.vicinity}`}
+            properties: {title: `${result.name}`, description: `${result.vicinity}`, placeId:`${result.place_id}`}
         })
 
 
@@ -422,33 +424,41 @@ function ingredientsCall(result) {
         }
     })
 }
-function getSaveRecipeComponents(id){
-    let instructions, ingredients, nutrition, title;
 
-    $.ajax({
-        url: `https://api.spoonacular.com/recipes/${id}/information?apiKey=${KEYS.returnSpoonKey()}&includeNutrition=true`,
-        success: function(data){
-        }
-    })
-
-}
 
 // Function to create join table between user and recipe ID
 function saveRecipe(result) {
-    console.log(result.id)
-    let recipeID = result.id
+    let obj = {
+        "title":`${result.title}`,
+        "ingredients": {
+            "ingredientsJson":`${JSON.stringify(result.extendedIngredients)}`
+        },
+        "instructions": {
+            "instructionsJson":`{\"instructions\":${JSON.stringify(result.instructions)}}`
+        },
+        "nutrition":{
+            "nutritionJson":`${JSON.stringify(result.nutrition.nutrients)}`
+        }
+
+
+    }
+    console.log(obj);
 
 
     let request = {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(recipeID)
+        headers: getHeaders(),
+        body: JSON.stringify(obj)
     };
-    console.log(recipeID, request)
-    fetch(`http://localhost:8080/api/recipes/`, request)
+    console.log(request);
+    fetch(`/api/recipes/`, request)
         .then((response) => {
             console.log(response.status)
-            createView("/")
+            if (response.ok){
+                alert("Recipe was saved")
+            }
+
+
         });
 
 

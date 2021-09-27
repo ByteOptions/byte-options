@@ -16,10 +16,14 @@ public class Restaurant {
     @Column(nullable = false)
     private String vicinity;
 
-    public Restaurant(Long id, String name, String vicinity) {
+    @Column(nullable = false)
+    private String placeId;
+
+    public Restaurant(Long id, String name, String vicinity, String placeId) {
         this.id = id;
         this.name = name;
         this.vicinity = vicinity;
+        this.placeId = placeId;
     }
 
     public Restaurant(){
@@ -47,5 +51,13 @@ public class Restaurant {
 
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }
