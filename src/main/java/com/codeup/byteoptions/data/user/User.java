@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.codeup.byteoptions.data.recipes.Recipe;
 import com.codeup.byteoptions.data.restaurant.Restaurant;
 import com.codeup.byteoptions.data.video.Video;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -155,6 +157,20 @@ public class User {
 
     public void addRecipe(Recipe recipe){
         recipes.add(recipe);
+    }
+
+    public void deleteRecipe(Long id){
+        System.out.println(id);
+        recipes.removeIf(r -> (r.getId().equals(id)));
+        for (Recipe recipe : recipes){
+            System.out.println(recipe.getId());
+        }
+    }
+    public void deleteRestaurant(Long id){
+        restaurants.removeIf(r -> (r.getId().equals(id)));
+    }
+    public void deleteVideo(Long id){
+        videos.removeIf(r -> (r.getId().equals(id)));
     }
 
     public Collection<Video> getVideos() {

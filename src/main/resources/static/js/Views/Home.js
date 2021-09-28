@@ -205,7 +205,12 @@ function setVideoSaveEvent() {
 
         fetch("/api/videos", request)
             .then((response) => {
-                console.log(response.status)
+                if (!response.ok){
+                    alert("Register an account to save videos.")
+                } else{
+                    console.log(response.status)
+                    alert("Video was saved")
+                }
             });
     })
 }
@@ -295,8 +300,13 @@ function setSaveEvent() {
 
         fetch("/api/restaurants", request)
             .then((response) => {
-                console.log(response.status)
-                alert("Restaurant was saved")
+                if (!response.ok){
+                    alert("Register an account to save restaurants.")
+                } else{
+                    console.log(response.status)
+                    alert("Restaurant was saved")
+                }
+
             });
     })
 }
@@ -453,8 +463,10 @@ function saveRecipe(result) {
     console.log(request);
     fetch(`/api/recipes/`, request)
         .then((response) => {
-            console.log(response.status)
-            if (response.ok){
+            if (!response.ok){
+                alert("Register an account to save recipes.")
+            } else{
+                console.log(response.status)
                 alert("Recipe was saved")
             }
 

@@ -7,6 +7,7 @@ import User, {UserEvent} from "./Views/User.js";
 import LoginEvent from "./auth.js";
 import NeedRegister from "./Views/NeedRegister.js";
 import Creators, {creatorsEvent} from "./Views/Creators.js"
+import logOut, {logOutEvents} from "./Views/Logout.js";
 
 
 // import {searchClick} from "./Views/Home.js"
@@ -76,6 +77,13 @@ export default function router(URI) {
             uri: '/creators',
             title: 'Creators',
             viewEvent: creatorsEvent
+        },
+        '/logout':{
+            returnView: logOut,
+            state:{},
+            uri: '/logout',
+            title: 'Logout',
+            viewEvent: logOutEvents
         }
 
 

@@ -25,13 +25,11 @@ export default function createView(URI) {
             headers: getHeaders()
         }
 
-       try {
+
         fetchData(route.state, request).then((props) => {
                render(props, route);
            })
-       } catch(e){
-        createView("/needRegister")
-       }
+
 
 
 }
