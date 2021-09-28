@@ -1,4 +1,6 @@
 import * as KEYS from "../keys.js";
+import {getHeaders} from "../auth.js";
+import createView from "../createView.js";
 
 var globalProps;
 
@@ -8,8 +10,8 @@ export default function User(props) {
     globalProps = props;
     console.log(globalProps);
     return `<div class="main-wrapper">
-            <div class="container h-100 w-100">
-                <div class="container w-100 h-100 g-0">
+            <div id="first-div-inner" class="container h-100 w-100">
+                <div id="second-div-inner" class="container w-100 h-100 g-0">
                     <div class="row  h-25">
                         <div class="container m-auto  w-75 h-75 row">
                             <div class="col-3 d-flex justify-content-center align-items-center p-0">
@@ -17,11 +19,10 @@ export default function User(props) {
                                      style="width: 75%; height: auto;">
                             </div>
                             <div class="col-9 d-flex flex-column flex-wrap justify-content-center align-items-center">
-                                <p class="display-6 mt-4">${props.user.username}</p>
-                                <p class=" text-muted mt-1">${props.user.email}</p>
+                                <p class="display-4 mt-4">Hello, ${props.user.username}</p>
                             </div>
                         </div>
-                        <div class="d-flex flex-column align-items-center justify-content-center flex-md-row justify-content-md-between">
+                        <div class="d-flex flex-column align-items-center justify-content-center flex-md-row justify-content-md-around">
                             <div class="dropdown my-1 my-md-0">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +51,7 @@ export default function User(props) {
                             </div>
                         </div>
                     </div>
-                    <div id="info-house" class="row  h-100">
+                    <div id="info-house" class="row  h-100 py-2 px-4">
                         
                     </div>
                 </div>
@@ -84,12 +85,17 @@ function addVideosClickToAnchors(props){
                     </iframe>
                     
                 </div>
+                 <div class="d-flex justify-content-end align-items-end">
+                <button data-id="${id}" id="delete-video-button" class="btn btn-secondary" type="button">Delete</button>
+                </div>
 
                 </div>
                 `)
 
             }
         })
+
+        loadVideoDeleteButton();
     })
 
 }
@@ -109,6 +115,9 @@ function addRestaurantClickToAnchors(props){
                     <div style="width: 80vw; height: 50vh;" id="map"></div>
                     
                 </div>
+                 <div class="d-flex justify-content-end align-items-end">
+                <button data-id="${id}" id="delete-restaurant-button" class="btn btn-secondary" type="button">Delete</button>
+                </div>
 
                 </div>
                 `)
@@ -117,6 +126,7 @@ function addRestaurantClickToAnchors(props){
         })
         mapBox();
         getLocations(globalRestaurant);
+        loadRestaurantDeleteButton();
     })
 
 }
@@ -196,20 +206,77 @@ function addRecipesClickToAnchors(props){
                 <p class="display-5">${recipe.title}</p>
             </div>
             <div>
-                <ul>
+                <ul class="p-0" id="recipes-ul">
                     ${returnIngredients(recipe)}
                 </ul>
             </div>
             <div>
                 ${returnInstructions(recipe)}
             </div>
+            <div class="d-flex justify-content-end align-items-end">
+            <button data-id="${id}" id="delete-recipe-button" class="btn btn-secondary" type="button">Delete</button>
+            </div>
                 `)
 
             }
         })
+        loadRecipeDeleteButton()
     })
 
 }
+function loadRecipeDeleteButton(){
+    $("#delete-recipe-button").click(function(){
+        if(confirm("Are you sure you want to delete this recipe?")){
+            let id = $(this).attr("data-id");
+            console.log(id);
+            $.ajax({
+                url:`/api/users/deleteRecipe/${id}`,
+                method: "DELETE",
+                headers: getHeaders(),
+                success: function(){
+                    alert("Successfully Deleted Recipe");
+                    createView("/user");
+                }
+            })
+        }
+    })
+}
+function loadRestaurantDeleteButton(){
+    $("#delete-restaurant-button").click(function(){
+        if(confirm("Are you sure you want to delete this restaurant?")){
+            let id = $(this).attr("data-id");
+            console.log(id);
+            $.ajax({
+                url:`/api/users/deleteRestaurant/${id}`,
+                method: "DELETE",
+                headers: getHeaders(),
+                success: function(){
+                    alert("Successfully Deleted Restaurant");
+                    createView("/user");
+
+                }
+            })
+        }
+    })
+}
+function loadVideoDeleteButton(){
+    $("#delete-video-button").click(function(){
+        if(confirm("Are you sure you want to delete this video?")){
+            let id = $(this).attr("data-id");
+            console.log(id);
+            $.ajax({
+                url:`/api/users/deleteVideo/${id}`,
+                method: "DELETE",
+                headers: getHeaders(),
+                success: function(){
+                    alert("Successfully Deleted Video");
+                    createView("/user");
+                }
+            })
+        }
+    })
+}
+
 function returnInstructions(recipe){
     let instructions = JSON.parse(recipe.instructions.instructionsJson);
     return instructions.instructions;
@@ -218,7 +285,7 @@ function returnInstructions(recipe){
 function returnIngredients(recipe) {
     let ingredients = JSON.parse(recipe.ingredients.ingredientsJson);
     console.log(ingredients);
-    return ingredients.map(ingredient => `<li>${ingredient.original}</li>`).join("");
+    return ingredients.map(ingredient => `<li">${ingredient.original}</li><br>`).join("");
 }
 
 

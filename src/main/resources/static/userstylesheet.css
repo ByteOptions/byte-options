@@ -6,3 +6,17 @@
 @media only screen and (min-width: 768px) {
 
 }
+
+#first-div-inner{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#second-div-inner{
+    border-radius: 20px;
+    align-self: center;
+    background-color: #f8f9fa;
+}
+#recipes-ul{
+    list-style: none;
+}
