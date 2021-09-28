@@ -203,6 +203,13 @@ h5{
     color: black;
 }
 
+#navLogo {
+    background: url("/img/16316362702731.png") no-repeat;
+    background-size: contain;
+    width: 214.61px;
+    height: 65px;
+}
+
 .login {
     min-height: 100vh;
 }
@@ -240,7 +247,7 @@ h5{
 }
 
 #app{
-    height: 100vh
+    /*height: 100vh*/
     /*background: rgb(241,253,45);*/
     /*background: linear-gradient(*/
     /*        0deg*/
