@@ -40,7 +40,7 @@ export default function Home() {
                                            type="search" placeholder="Search topics or keywords">
                                 </div>
                                 <div class="col-auto">
-                                    <button id="submit" class="btn btn-outline-dark" type="button">Search</button>
+                                    <button id="submit" class="btn" type="button">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -262,7 +262,7 @@ function createMarkers() {
                         <p data-id="${properties.placeId}" class="restaurantName">${properties.title}</p> 
                         <br>
                           <p class="vicinity">${properties.description}</p> 
-                        <button type="button" class="btn btn-outline-dark restaurantSave">Save</button> 
+                        <button type="button" class="saveBtn btn-outline-dark restaurantSave">Save</button> 
                         </form>`
                     )
             )
