@@ -18,15 +18,7 @@ export default function Navbar() {
 <!--                        </li>-->
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/" data-link>Home</a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="/restaurants" data-link>Restaurants</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/recipes" data-link>Recipes</a>
+                            <a class="nav-link" href="/creators" data-link>Creators</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/user" data-link>Account</a>
