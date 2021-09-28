@@ -1,9 +1,9 @@
 export default function Navbar() {
     return `<nav class="navbar navbar-expand-lg navbar-light p-0">
             <div class="container-fluid" id="nav-container">
-                <a class="navbar-brand nav-link" data-link href="/">
-                    <img src="/img/16316362702731.png" alt="" width="auto" height="65"
-                         class="d-inline-block align-text-top">
+                <a id="navLogo" class="navbar-brand nav-link" data-link href="/">
+<!--                    <img src="/img/16316362702731.png" alt="" width="auto" height="65"-->
+<!--                         class="d-inline-block align-text-top">-->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
