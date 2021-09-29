@@ -1,19 +1,11 @@
 import * as KEYS from "../keys.js";
-import createView from "../createView.js";
 import {getHeaders} from "../auth.js";
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
 })
-// var KEYS;
-//
-// $.ajax("/key.js",
-//     {
-//         success: function(data){
-//             data
-//         }
-//     })
+
 
 var map;
 
@@ -99,13 +91,44 @@ function searchClick() {
     $("#submit").click(function () {
         let q = $("#inputMain").val();
         console.log(q);
-        getLocations(q);
         getVideos(q);
-        mapBox();
         searchRecipes(q);
         scrollToAnchor();
         hideDivs();
+        requestAuthority(q);
+
     })
+}
+
+function requestAuthority(q) {
+    if (localStorage.getItem("access_token")) {
+        $.ajax({
+            url: `/api/users/me`,
+            method: 'GET',
+            headers: getHeaders(),
+            statusCode: {
+
+                401: function () {
+                    console.log("401 fired")
+                    $("#map").html("").html(`<div>Register an account to see locations serving ${q}!</div>`)
+
+                },
+                200: function (data) {
+                    console.log(data);
+                    console.log(data.center);
+
+                    console.log("200 fired")
+                    getLocations(q, data.center);
+                    mapBox(data.center);
+
+
+                }
+            }
+        })
+    } else {
+        $("#map").html("").html(`<div>Register an account to see locations serving ${q}!</div>`);
+    }
+
 }
 
 // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // YOUTUBE FUNCTIONS // BELOW
@@ -205,9 +228,9 @@ function setVideoSaveEvent() {
 
         fetch("/api/videos", request)
             .then((response) => {
-                if (!response.ok){
+                if (!response.ok) {
                     alert("Register an account to save videos.")
-                } else{
+                } else {
                     console.log(response.status)
                     alert("Video was saved")
                 }
@@ -226,10 +249,11 @@ function addYoutubePagination(q) {
     })
 }
 
-function getLocations(q) {
+function getLocations(q, center) {
+    let coords = center.split(",")
     $.ajax({
         method: "GET",
-        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=29.4241%2C-98.4936&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
+        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords[1]}%2C${coords[0]}&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
         success: function (data) {
             console.log(data);
             console.log("locations")
@@ -239,13 +263,14 @@ function getLocations(q) {
 }
 
 //Mapbox Functions//Mapbox Functions//Mapbox Functions//Mapbox Functions//Mapbox Functions//
-function mapBox() {
+function mapBox(center) {
+    let coords = center.split(",")
     mapboxgl.accessToken = KEYS.returnMapboxKey();
     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-98.4936, 29.4241], // starting position [lng, lat]
-        zoom: 12 // starting zoom
+        center: [coords[0], coords[1]], // starting position [lng, lat]
+        zoom: 10 // starting zoom
     });
 
 }
@@ -300,9 +325,9 @@ function setSaveEvent() {
 
         fetch("/api/restaurants", request)
             .then((response) => {
-                if (!response.ok){
+                if (!response.ok) {
                     alert("Register an account to save restaurants.")
-                } else{
+                } else {
                     console.log(response.status)
                     alert("Restaurant was saved")
                 }
@@ -319,7 +344,7 @@ function combLocation(data) {
         geojson.features.unshift({
             type: 'Feature',
             geometry: {type: 'Point', coordinates: [lng, lat]},
-            properties: {title: `${result.name}`, description: `${result.vicinity}`, placeId:`${result.place_id}`}
+            properties: {title: `${result.name}`, description: `${result.vicinity}`, placeId: `${result.place_id}`}
         })
 
 
@@ -439,15 +464,15 @@ function ingredientsCall(result) {
 // Function to create join table between user and recipe ID
 function saveRecipe(result) {
     let obj = {
-        "title":`${result.title}`,
+        "title": `${result.title}`,
         "ingredients": {
-            "ingredientsJson":`${JSON.stringify(result.extendedIngredients)}`
+            "ingredientsJson": `${JSON.stringify(result.extendedIngredients)}`
         },
         "instructions": {
-            "instructionsJson":`{\"instructions\":${JSON.stringify(result.instructions)}}`
+            "instructionsJson": `{\"instructions\":${JSON.stringify(result.instructions)}}`
         },
-        "nutrition":{
-            "nutritionJson":`${JSON.stringify(result.nutrition.nutrients)}`
+        "nutrition": {
+            "nutritionJson": `${JSON.stringify(result.nutrition.nutrients)}`
         }
 
 
@@ -463,9 +488,9 @@ function saveRecipe(result) {
     console.log(request);
     fetch(`/api/recipes/`, request)
         .then((response) => {
-            if (!response.ok){
+            if (!response.ok) {
                 alert("Register an account to save recipes.")
-            } else{
+            } else {
                 console.log(response.status)
                 alert("Recipe was saved")
             }
