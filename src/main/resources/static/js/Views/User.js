@@ -15,8 +15,8 @@ export default function User(props) {
                     <div class="row  h-25">
                         <div class="container m-auto  w-75 h-75 row">
                             <div class="col-3 d-flex justify-content-center align-items-center p-0">
-                                <img src="/img/icons8-test-account-100.png" class="p-0" alt="1"
-                                     style="width: 75%; height: auto;">
+                                <img src="../../img/humanperson.png" class="p-0" alt="1"
+                                     style="width: 50%; height: auto; margin: 5px">
                             </div>
                             <div class="col-9 d-flex flex-column flex-wrap justify-content-center align-items-center">
                                 <p class="display-4 mt-4">Hello, ${props.user.username}</p>

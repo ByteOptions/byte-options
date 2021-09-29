@@ -8,7 +8,7 @@ export default function Register(props) {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-8 col-xl-6">
         <div id="registerForm" class="card rounded-3">
-          <img src="./img/registerFoodPicture.jpeg" class="w-100" style="height: 300px; border-top-left-radius: .3rem; border-top-right-radius: .3rem; object-fit: cover;" alt="Sample photo">
+          <img src="../../img/registerFoodPicture.jpeg" class="w-100" style="height: 300px; border-top-left-radius: .3rem; border-top-right-radius: .3rem; object-fit: cover;" alt="Sample photo">
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration Info</h3>
 

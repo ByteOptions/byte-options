@@ -1,4 +1,5 @@
 import * as KEYS from "../keys.js";
+import createView from "../createView.js";
 import {getHeaders} from "../auth.js";
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -29,7 +30,7 @@ export default function Home() {
                                 </div>
                                 <div class="col">
                                     <input id="inputMain" class="form-control form-control-lg form-control-borderless"
-                                           type="search" placeholder="Search topics or keywords">
+                                           type="search" placeholder="What do you feel like eating today?">
                                 </div>
                                 <div class="col-auto">
                                     <button id="submit" class="btn" type="button">Search</button>
