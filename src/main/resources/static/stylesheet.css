@@ -294,7 +294,7 @@ h5{
 
 #recipeContainer{
     background: white;
-    border-right-style: solid;
+    /*border-right-style: solid;*/
     border-radius: 20px 0 0 20px;
     /*background: rgb(241,253,45);*/
     /*background: linear-gradient(0deg, rgba(241,253,45,1) 0%, rgba(31,197,142,1) 100%);*/
