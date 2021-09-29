@@ -35,6 +35,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String center;
+
     @Enumerated(EnumType.STRING)
     @Column
     private Role role = Role.USER;
@@ -86,7 +89,7 @@ public class User {
 
     public User(Long id, String username, String email, String password,
                 Collection<Restaurant> restaurants, Collection<Recipe> recipes,
-                Collection<Video> videos) {
+                Collection<Video> videos, String center) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -94,6 +97,7 @@ public class User {
         this.restaurants = restaurants;
         this.recipes=recipes;
         this.videos = videos;
+        this.center = center;
     }
 
     public User(){
@@ -191,6 +195,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getCenter() {
+        return center;
+    }
+
+    public void setCenter(String center) {
+        this.center = center;
     }
 }
 

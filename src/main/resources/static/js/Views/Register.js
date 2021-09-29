@@ -1,6 +1,7 @@
 import createView from "../createView.js";
+import * as KEYS from "../keys.js";
 
-export default function Register(props){
+export default function Register(props) {
     return `
 <section  class="h-100 h-custom" style="">
   <div class="container py-5">
@@ -30,20 +31,21 @@ export default function Register(props){
                 <label class="form-label" for="form3Example1q">Confirm Password</label>
               </div>
 
-              <div class="row" style="place-content: space-around">
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline datepicker">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleDatepicker1"
-                    />
-                    <label for="exampleDatepicker1" class="form-label">Enter Zip Code</label>
-                  </div>
+              <div class="row">
+                <div class="col-12 mb-4">
+                <div id="geocoder" class="d-flex justify-content-center align-items-center"></div>
+                  
+
                 </div>
               </div>
 
-              <button id="registerButton" type="submit" style="background-color: transparent; border: 1px solid transparent; border-color: #212529" class="btn btn-lg mb-1">Sign Up</button>
+              <div class="mb-4">
+
+                
+
+              </div>
+
+              <button id="registerButton" type="submit" style="background-color: transparent; border: 1px solid transparent; border-color: #212529" class="btn btn-lg mb-1">Register</button>
 
             </form>
 
@@ -56,17 +58,23 @@ export default function Register(props){
 `;
 }
 
-export function createRegisterEvents(){
+export function createRegisterEvents() {
     registerEvent()
-}
 
-function registerEvent(){
-    $("#registerButton").click(function(){
+    geoCoder()
+
+
+}
+var center = "";
+
+function registerEvent() {
+    $("#registerButton").click(function () {
 
         let newUser = {
-            username : $("#usernameInput").val(),
+            username: $("#usernameInput").val(),
             email: $("#emailInput").val(),
             password: $("#passwordInput").val(),
+            center: `${center}`
         }
         console.log(newUser)
 
@@ -82,4 +90,19 @@ function registerEvent(){
                 createView("/")
             });
     })
+}
+
+function geoCoder() {
+    mapboxgl.accessToken = KEYS.returnMapboxKey();
+    const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        countries: "us",
+        types: 'country,region,place,postcode,locality,neighborhood'
+    });
+    geocoder.addTo('#geocoder');
+    geocoder.on('result', (e) => {
+        center = e.result.center;
+    });
+
+    $(".mapboxgl-ctrl-geocoder--input").attr("placeholder", "Enter Zip-Code");
 }

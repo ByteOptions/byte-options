@@ -65,6 +65,7 @@ public class UsersController {
 
     @PostMapping
     private void createUser(@RequestBody User newUser){
+        System.out.println(newUser.getCenter());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         usersRepository.save(newUser);
     }
