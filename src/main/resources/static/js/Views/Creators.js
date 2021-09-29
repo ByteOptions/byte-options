@@ -1,6 +1,6 @@
 export default function Creators () {
         return `
-            <div class="container" style="display: flex; justify-content: space-around; margin-top: 150px">
+            <div id="creatorsMain" class="container" style="display: flex; justify-content: space-around; margin-top: 150px">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
                          <img class="img" src="/img/Grady.jpeg" alt="Avatar" style="width: 200px">

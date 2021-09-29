@@ -10,7 +10,7 @@ export default function User(props) {
     globalProps = props;
     console.log(globalProps);
     return `<div class="main-wrapper">
-            <div id="first-div-inner" class="container h-100 w-100">
+            <div id="first-div-inner" class="container w-100">
                 <div id="second-div-inner" class="container w-100 h-100 g-0">
                     <div class="row  h-25">
                         <div class="container m-auto  w-75 h-75 row">
