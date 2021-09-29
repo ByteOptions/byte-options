@@ -14,56 +14,33 @@ export default function Register(props){
             <form class="px-md-2">
 
               <div class="form-outline mb-4">
-                <input id="emailInput" type="text" id="form3Example1q" class="form-control" />
+                <input id="emailInput" type="text" class="form-control" />
                 <label class="form-label" for="form3Example1q">Email</label>
               </div>
               <div class="form-outline mb-4">
-                <input id="usernameInput" type="text" id="form3Example1q" class="form-control" />
+                <input id="usernameInput" type="text" class="form-control" />
                 <label class="form-label" for="form3Example1q">Username</label>
               </div>
               <div class="form-outline mb-4">
-                <input id="passwordInput" type="password" id="form3Example1q" class="form-control" />
+                <input id="passwordInput" type="password" class="form-control" />
                 <label class="form-label" for="form3Example1q">Password</label>
               </div>
               <div class="form-outline mb-4">
-                <input id="confirmPassword" type="password" id="form3Example1q" class="form-control" />
+                <input id="confirmPassword" type="password" class="form-control" />
                 <label class="form-label" for="form3Example1q">Confirm Password</label>
               </div>
 
-              <div class="row">
+              <div class="row" style="place-content: space-around">
                 <div class="col-md-6 mb-4">
-
                   <div class="form-outline datepicker">
                     <input
                       type="text"
                       class="form-control"
                       id="exampleDatepicker1"
                     />
-                    <label for="exampleDatepicker1" class="form-label">Select a date</label>
+                    <label for="exampleDatepicker1" class="form-label">Enter Zip Code</label>
                   </div>
-
                 </div>
-                <div class="col-md-6 mb-4">
-
-                  <select class="select">
-                    <option value="1" disabled>Gender</option>
-                    <option value="2">Female</option>
-                    <option value="3">Male</option>
-                    <option value="4">Other</option>
-                  </select>
-
-                </div>
-              </div>
-
-              <div class="mb-4">
-
-                <select class="select">
-                  <option value="1" disabled>Class</option>
-                  <option value="2">Class 1</option>
-                  <option value="3">Class 2</option>
-                  <option value="4">Class 3</option>
-                </select>
-
               </div>
 
               <button id="registerButton" type="submit" style="background-color: transparent; border: 1px solid transparent; border-color: #212529" class="btn btn-lg mb-1">Sign Up</button>
@@ -81,7 +58,6 @@ export default function Register(props){
 
 export function createRegisterEvents(){
     registerEvent()
-
 }
 
 function registerEvent(){
