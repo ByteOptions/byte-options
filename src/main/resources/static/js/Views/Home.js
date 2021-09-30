@@ -29,8 +29,10 @@ export default function Home() {
                                     <i class="fas fa-search h4 text-body"></i>
                                 </div>
                                 <div class="col">
+                                <form id="searchForm">
                                     <input id="inputMain" class="form-control form-control-lg form-control-borderless"
                                            type="search" placeholder="What do you feel like eating today?">
+                                </form>
                                 </div>
                                 <div class="col-auto">
                                     <button id="submit" class="btn" type="button">Search</button>
@@ -78,10 +80,24 @@ jQuery(document).on("keypress", 'form', function (e) {
         return false;
     }
 });
+// var service;
 
 export function homeEvents() {
     searchClick();
 }
+// function googlePlaces(){
+//     console.log("fired")
+//     service = new google.maps.places.PlacesService(map);
+//     let request = {
+//         location: [-98, 28],
+//         radius: 3000,
+//         keyword: "pizza"
+//     }
+//     service.nearbySearch(request, function(data){
+//         console.log(data);
+//     })
+//
+// }
 
 function scrollToAnchor() {
     var aTag = $("#Ainfo");
@@ -90,15 +106,23 @@ function scrollToAnchor() {
 
 function searchClick() {
     $("#submit").click(function () {
-        let q = $("#inputMain").val();
-        console.log(q);
-        getVideos(q);
-        searchRecipes(q);
-        scrollToAnchor();
-        hideDivs();
-        requestAuthority(q);
-
+    submitEvent()
     })
+    $("#inputMain").keypress(function (e){
+        if(e.which === 13){
+            submitEvent()
+        }
+    })
+}
+
+function submitEvent(){
+    let q = $("#inputMain").val();
+    console.log(q);
+    getVideos(q);
+    searchRecipes(q);
+    scrollToAnchor();
+    hideDivs();
+    requestAuthority(q);
 }
 
 function requestAuthority(q) {
@@ -254,7 +278,7 @@ function getLocations(q, center) {
     let coords = center.split(",")
     $.ajax({
         method: "GET",
-        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords[1]}%2C${coords[0]}&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
+        url: `https://cors-anywhere.hirshwebsite.website/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords[1]}%2C${coords[0]}&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
         success: function (data) {
             console.log(data);
             console.log("locations")

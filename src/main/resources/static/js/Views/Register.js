@@ -70,6 +70,11 @@ var center = "";
 function registerEvent() {
     $("#registerButton").click(function () {
 
+        if($("#passwordInput").val()!== $("#confirmPassword").val()){
+            alert("Passwords don't match!")
+            return
+        }
+
         let newUser = {
             username: $("#usernameInput").val(),
             email: $("#emailInput").val(),
@@ -87,7 +92,12 @@ function registerEvent() {
         fetch("/api/users", request)
             .then((response) => {
                 console.log(response.status)
-                createView("/")
+                if (response.ok){
+                    createView("/login");
+                } else {
+                    alert("Error");
+                }
+
             });
     })
 }
