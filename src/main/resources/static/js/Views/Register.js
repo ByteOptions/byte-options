@@ -87,7 +87,12 @@ function registerEvent() {
         fetch("/api/users", request)
             .then((response) => {
                 console.log(response.status)
-                createView("/")
+                if (response.ok){
+                    createView("/login");
+                } else {
+                    alert("Error");
+                }
+
             });
     })
 }
