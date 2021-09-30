@@ -1,6 +1,8 @@
 export default function Creators () {
         return `
-            <div id="creatorsMain" class="container" style="display: flex; justify-content: space-around; margin-top: 150px">
+        <div>
+            <div id="creatorsMain" class="container" style="display: flex; justify-content: space-around; margin-top: 50px; height: 100vh; border-radius: 20px; padding: 40px">
+            
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
                          <img class="img" src="/img/Grady.jpeg" alt="Avatar" style="width: 200px">
@@ -39,7 +41,8 @@ export default function Creators () {
                         <a href="mailto: shaw.corey@gmail.com">Email</a>
                     </div>
                 </div>
-            </div>`
+            </div>
+        </div>`
         };
 
 export function creatorsEvent(){
