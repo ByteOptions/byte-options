@@ -29,8 +29,10 @@ export default function Home() {
                                     <i class="fas fa-search h4 text-body"></i>
                                 </div>
                                 <div class="col">
+                                <form id="searchForm">
                                     <input id="inputMain" class="form-control form-control-lg form-control-borderless"
                                            type="search" placeholder="What do you feel like eating today?">
+                                </form>
                                 </div>
                                 <div class="col-auto">
                                     <button id="submit" class="btn" type="button">Search</button>
@@ -104,15 +106,23 @@ function scrollToAnchor() {
 
 function searchClick() {
     $("#submit").click(function () {
-        let q = $("#inputMain").val();
-        console.log(q);
-        getVideos(q);
-        searchRecipes(q);
-        scrollToAnchor();
-        hideDivs();
-        requestAuthority(q);
-
+    submitEvent()
     })
+    $("#inputMain").keypress(function (e){
+        if(e.which === 13){
+            submitEvent()
+        }
+    })
+}
+
+function submitEvent(){
+    let q = $("#inputMain").val();
+    console.log(q);
+    getVideos(q);
+    searchRecipes(q);
+    scrollToAnchor();
+    hideDivs();
+    requestAuthority(q);
 }
 
 function requestAuthority(q) {
