@@ -78,10 +78,24 @@ jQuery(document).on("keypress", 'form', function (e) {
         return false;
     }
 });
+// var service;
 
 export function homeEvents() {
     searchClick();
 }
+// function googlePlaces(){
+//     console.log("fired")
+//     service = new google.maps.places.PlacesService(map);
+//     let request = {
+//         location: [-98, 28],
+//         radius: 3000,
+//         keyword: "pizza"
+//     }
+//     service.nearbySearch(request, function(data){
+//         console.log(data);
+//     })
+//
+// }
 
 function scrollToAnchor() {
     var aTag = $("#Ainfo");
@@ -254,7 +268,7 @@ function getLocations(q, center) {
     let coords = center.split(",")
     $.ajax({
         method: "GET",
-        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords[1]}%2C${coords[0]}&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
+        url: `https://cors-anywhere.hirshwebsite.website/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords[1]}%2C${coords[0]}&radius=3000&key=${KEYS.returnGoogleKey()}&type=restaurant&keyword=${q}`,
         success: function (data) {
             console.log(data);
             console.log("locations")

@@ -27,8 +27,19 @@ export default function LoginEvent() {
                 route: `/oauth/token`
             },
             request).then((data) => {
-            setTokens(data);
-            createView("/");
+            console.log(data);
+            if (data.route.error){
+                if (data.route.error_description.includes("credentials")){
+                    alert("Incorrect Password")
+                } else{
+                    alert(`${data.route.error_description}`);
+                }
+            }else{
+                setTokens(data);
+                createView("/");
+            }
+
+
         });
     });
 }

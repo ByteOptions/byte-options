@@ -147,7 +147,7 @@ function mapBox() {
 function getLocations(restaurant) {
     $.ajax({
         method: "GET",
-        url: `https://maps.googleapis.com/maps/api/place/details/json?place_id=${restaurant.placeId}&key=${KEYS.returnGoogleKey()}`,
+        url: `https://cors-anywhere.hirshwebsite.website/https://maps.googleapis.com/maps/api/place/details/json?place_id=${restaurant.placeId}&key=${KEYS.returnGoogleKey()}`,
         success: function (data) {
             console.log(data);
             combLocation(data);
