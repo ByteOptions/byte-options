@@ -5,6 +5,6 @@
 #
 ## Made by:
 ###  Samuel Bowcut
-###  Jesse Sosa-Lefew
+###  Jesse Sosa-Leffew
 ### Corey Shaw
 ### Grady Griffin
